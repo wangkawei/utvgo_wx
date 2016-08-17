@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="renderer" content="webkit"><!-- 国产双核浏览器，启用极速模式 -->
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	
+	<meta http-equiv="Cache-Control" content="no-transform">
+	<meta charset="utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="full-screen" content="yes">
+	<meta name="screen-orientation" content="portrait">
+	<meta name="x5-fullscreen" content="true">
+	<meta name="360-fullscreen" content="true">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="mobile-web-app-status-bar-style" content="black" />
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="touch-fullscreen" content="yes"/>
+	
+    <title></title>
+    <link rel="stylesheet" href="./res/css/base.css?v=f64bdde28d" />
+    <link rel="stylesheet" href="./res/css/idangerous.swiper.css?v=a769a5281c" />
+    <link rel="stylesheet" href="./res/css/main.css?v=b0892edef1" />
+    <link rel="stylesheet" href="./res/css/zb_listShow.css?v=1944e58fae" />
+    <link rel="stylesheet" href="./res/css/gb_listShow.css?v=d41d8cd98f" />
+    <style type="text/css">
+		html,body{
+			background-color: #fff;
+		}
+.detailTabContentBox:nth-child(1) .listItem .icon {
+	  	width: 30px;
+	    background-image: none;
+	}	
+.detailTabContentBox:nth-child(1) .listItem.notStart .icon {
+    color: #000000;
+	background-image: none;
+
+}
+.listItem .icon i {
+    border-radius: 50%;
+     background-color: #FFFFFF; 
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    margin-right: -20px;
+    background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaBAMAAABbZFH9AAAAD1BMVEUAAACtra2tra2tra2tra09nUoQAAAABHRSTlMAVtTWUUZDYgAAACtJREFUGNNjGHRAyEkAwWF0cXFE8JhcXJwQPBYXFxdUOVz6GISdBRgGHgAARMIEx1WcOuUAAAAASUVORK5CYII=) center no-repeat;
+    background-size: 50%;
+}
+
+.detailTabContentBox:nth-child(1) .listItem.isOver {
+    color: #ABABAB;
+    background-image: none
+}
+.detailTabContentBox:nth-child(1) .listItem.onPlay {
+    color: #F05E00;
+    background-image: none
+
+}
+.listItem.onPlay  .icon i {
+	background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAMAAACelLz8AAAAXVBMVEUAAADrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQDrYQAN9CQkAAAAHnRSTlMA+gm+wz/I5pmCLhKO5+DXzSgNm3d2Jhu3sktCNgX8/ONeAAAAu0lEQVQoz32SWRKEIAxEG6MjuO+z5/7HnKrBGKTU90c9lk4IhGWm3Jic5gV7spQ30gxKYnmHTcSUN464lesZNer8uZEPGP8J2EOuC10GQLIBX2eCnEDBmwI+rboCLlRIKhYcSFWdFsC7kbeRq2I21YDh6dc5TKiYW+Du1yZWnaroQpegfMiFpKqhHnjJXorCD1bD70vOmrBkbZTUK43S9nZVG7cXlg+wF195PgDnY3M9bEo/UW1MTVOPlR8UpzMQoUDWkAAAAABJRU5ErkJggg==) center no-repeat;
+    background-size: 50%;
+}
+.detailTabContentBox:nth-child(1) .listItem.notStart {
+    color: #000000;
+    background-image: none
+}
+
+.detailTabContentBox:nth-child(2) .listItem .icon {
+    background-image:none;
+}
+.detailTabContentBox {
+    padding-top: 0px;
+}
+.video-play-img{
+	background-image:url(res/images/gb_bg.png?v=d3cb1600f4);
+}
+.video-play-img.on{
+	background-image:url(res/images/gb_bg_on.gif?v=5502b9fef1);
+}
+
+
+		
+    </style>
+    <script type="text/javascript">
+    
+    </script>
+</head>
+<body style="" class="overflowHidden">
+
+	<div class="video-play-wrapper">
+		<audio id="videoView" poster="" src="" controls webkit-playsinline="true" x-webkit-airplay></audio>
+		<div class="video-play-img"></div>
+		<div class="video-play-play-icon"></div>
+		<div class="video-top-bar">
+			<button class="video-top-bar-back"></button>
+			<div class="video-play-title ellipsis"></div>
+		</div>
+	</div>
+
+
+	<div class="detailTabBox">
+		<div class="tabContentBoxWrapper">
+			<div id="detailTabContentBox_0" class="detailTabContentBox show">
+<!-- 				<ul class="tvListBox show">
+						<li class="listItem on">
+							<div class="icon"><b class="top"></b><b class="bottom"></b><i></i><span class="playTipsText">已结束</span></div>
+							<div class="tvShowItem">
+								<span class="tvShowtime">09:30&nbsp;&nbsp;海派甜心(24)</span>
+							</div>
+						</li>								
+					</ul>	
+			</div>	 -->	
+		</div>
+		
+	</div>
+
+	<script type="text/javascript" src="./res/js/lib/zepto-1.1.6.js?v=8155cb4235"></script>
+	<script type="text/javascript" src="./res/js/lib/fx.js?v=ca467e4b03"></script>
+	<script type="text/javascript" src="./res/js/lib/fx_methods.js?v=2aabbf9887"></script>
+	<script type="text/javascript" src="./res/js/lib/idangerous.swiper.js?v=e61af1cb6a"></script>
+	<script type="text/javascript" src="./res/js/main.js?v=98c8cfd568"></script>
+	<script type="text/javascript" src="./res/js/gb_listShow.js?v=e33a186b99"></script>
+
+	<script>
+
+
+	</script>
+</body>
+
+
+</html>

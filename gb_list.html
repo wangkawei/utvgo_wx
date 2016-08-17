@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="renderer" content="webkit"><!-- 国产双核浏览器，启用极速模式 -->
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	
+	<meta http-equiv="Cache-Control" content="no-transform">
+	<meta charset="utf-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="full-screen" content="yes">
+	<meta name="screen-orientation" content="portrait">
+	<meta name="x5-fullscreen" content="true">
+	<meta name="360-fullscreen" content="true">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="mobile-web-app-status-bar-style" content="black" />
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="touch-fullscreen" content="yes"/>
+	
+    <title>广播</title>
+    <link rel="stylesheet" href="./res/css/base.css" />
+    <link rel="stylesheet" href="./res/css/idangerous.swiper.css" />
+    <link rel="stylesheet" href="./res/css/main.css" />
+    <link rel="stylesheet" href="./res/css/zb_list.css" />
+
+    <link rel="stylesheet" href="./res/css/gb_list.css" />
+    <style type="text/css">
+.zb-item-icon {
+	background-image: url(res/images/gb_entertainment@2x.png);
+}
+.zb-item-icon.on {
+background-image: url(res/images/gb_entertainment_pressed@2x.png);
+
+}
+.zb-item-logo{
+    background-image: url(res/images/gb_dt_play@2x.png);
+}
+.zb-item-logo.on{
+    background-image: url(res/images/gb_pause@2_x.png);
+}
+.indexContentBox  {
+    height: 100%;
+    overflow-y: scroll;
+    width: 100%;
+}
+.rmdy-item, .zb-item {
+     padding: 0px; 
+}
+.zb-item-text {
+    padding-top: 10px;
+}
+.zb-item-link {
+     border: 0; 
+}
+.listTypeBox .swiper-free-mode>.swiper-wrapper {
+    margin: 0;
+    height: 38px;
+}
+    </style>
+    <script type="text/javascript">
+
+    
+    </script>
+</head>
+<body style="" class="overflow-scroll-y">
+	<div id="sideMenu" class="overflow-scroll-y">
+		<div class="search-wrapper">
+			<div type="text" id="searchInput">请输入关键词</div>
+		</div>
+		<div class="sideMenu-list-wrapper clearfix">
+			<a href="index.html" class="menuItem">
+				<img src="./res/images/home@2x.png">
+				<p>推荐</p>
+			</a>
+			<a href="zb_list.html" class="menuItem">
+				<img src="./res/images/liveplay_icon@2x.png">
+				<p>直播</p>
+			</a>
+			<a href="db_index.html" class="menuItem">
+				<img src="./res/images/db_icon@2x.png">
+				<p>点播</p>
+			</a>
+			<a href="#" class="menuItem">
+				<img src="./res/images/broadcast_icon@2x.png">
+				<p>广播</p>
+			</a>
+			<!-- <a href="#" class="menuItem">
+				<img src="./res/images/shopping_icon@2x.png">
+				<p>购物</p>
+			</a> -->
+			<a href="http://m.maizuo.com/" class="menuItem">
+				<img src="./res/images/ticket_icon@2x.png">
+				<p>电影票</p>
+			</a>
+			<a href="#" class="menuItem">
+				<img src="./res/images/usercenter_icon@2x.png">
+				<p>个人中心</p>
+			</a>
+			<a href="qd_list.html" class="menuItem">
+				<img src="./res/images/qd_icon@2x.png">
+				<p>强档</p>
+			</a>
+			<a href="sp_list.html" class="menuItem">
+				<img src="./res/images/zq_icon@2x.png">
+				<p>专区</p>
+			</a>
+			<a href="dy_list.html?channelId=2" class="menuItem">
+				<img src="./res/images/movie_icon@2x.png">
+				<p>电影</p>
+			</a>
+			<a href="dy_list.html?channelId=3" class="menuItem">
+				<img src="./res/images/dsj_icon@2x.png">
+				<p>剧集</p>
+			</a>
+			<a href="dy_list.html?channelId=7" class="menuItem">
+				<img src="./res/images/dm_icon@2x.png">
+				<p>动漫</p>
+			</a>
+			<!-- <a href="#" class="menuItem">
+				<img src="./res/images/car_icon@2x.png">
+				<p>汽车</p>
+			</a>
+			<a href="#" class="menuItem">
+				<img src="./res/images/card_icon@2x.png">
+				<p>贺卡</p>
+			</a>
+			<a href="#" class="menuItem">
+				<img src="./res/images/39health_icon@2x.png">
+				<p>39健康</p>
+			</a> -->
+		</div>
+	</div>
+	<div id="main" class="overflowHidden">
+	    <div class="main-header">
+	        <button id="menuBt"></button>
+	        <button id="meBt"></button>
+	    </div>
+	    <div class="listTypeBox">
+		    <div id="swiper-container1" class="swiper-container">
+				<ul id="typeList" class="listType-type swiper-wrapper" >
+		            <!-- <li class="listType-item swiper-slide " data-id=""><span>国家台</span></li> -->
+				</ul>
+		    </div>
+	    </div>
+	    <div class="tvlistbox">
+		    <div id="swiper-container2" class="swiper-container">
+		        <ul id="container2Wrapper" class="swiper-wrapper">
+		            <li id="" class="indexContentBox swiper-slide overflow-scroll-y">
+<!-- 		                <div class="zb-item">
+		                    <a href="#" class="zb-item-link clearfix">
+		                        <div class="zb-item-logo" style=""></div>
+		                        <div class="zb-item-text">
+		                            <p class="zb-item-now ellipsis">广东体育频道</p>
+		                            <p class="zb-item-next ellipsis">正在播出：财富前途</p>
+		                        </div>
+		                        <div class="zb-item-icon"></div>
+		                    </a>
+		                </div> -->
+		            </li>		            
+		        </ul>
+		    </div>
+	    </div>
+	</div>
+
+	<div class="loadingTip"><div class="loadingTipImg"></div></div>
+
+
+	<script type="text/javascript" src="./res/js/lib/zepto-1.1.6.js"></script>
+	<script type="text/javascript" src="./res/js/lib/fx.js"></script>
+	<script type="text/javascript" src="./res/js/lib/fx_methods.js"></script>
+	<script type="text/javascript" src="./res/js/lib/idangerous.swiper.js"></script>
+
+	<script type="text/javascript" src="./res/js/main.js"></script>
+	<script type="text/javascript">
+
+var dataFlag={};
+var req=null;
+var urlParaObj={};//
+var areaId="";	
+var typeIndex=""||0;
+showLoading();	
+$(document).ready(function () {
+	urlParaObj=getUrlPara();//
+	areaId=urlParaObj.areaId||"";//
+	mainId=parseInt(urlParaObj.mainId)||0;//
+	subId=parseInt(urlParaObj.subId)||0;//
+	init();
+
+})
+function init(){
+
+	getTvTypes(function(data){
+		initTypesList(data,function(){
+			loadTVlistByType(mainId,function(){
+				$("#container2Wrapper .indexContentBox ").eq(mainId).find(".zb-item-logo").eq(subId).addClass("on");
+			});
+			initSwiper(mainId);
+
+		});
+	});	
+}
+
+function loadTVlistByType(activeIndex,fun){
+	// var i=swiper.activeIndex;
+	var i=activeIndex;
+	var areaId=$('#typeList .swiper-slide').eq(i).attr('data-id');
+	var $el=$('#container2Wrapper .swiper-slide').eq(i);
+	showLoading();
+	if (!!dataFlag[""+areaId]&&!!dataFlag[""+areaId].flag) {
+		return false;
+	};
+		
+		if (!!req) {
+			req.abort();
+			req=null
+		};
+
+		req=$.ajax({
+		  type: 'GET',
+		  url: serverAddress+'/utvgoClient/interfaces/getRadio_list.action?pageNo=1&pageSize=1000&areaId='+areaId,
+		  // data to be added to query string:
+		  //data: {},
+		  // type of data we are expecting in return:
+		  dataType: 'json',
+		  success: function(data){
+		  	if (data.status==0) {
+		  		var _data=data.result;
+		  		var s='';
+		  		var item;
+			    for(var i=0,len=_data.length;i<len;i++){
+			    	item=_data[i];			    	
+			    		s+='<div class="zb-item"> <div  class="zb-item-link clearfix"> <div data-href="./gb_listShow.html?contentId='+item.id+'&fetchRadioId='+item.fetchRadioId+'"  class="zb-item-logo" style=""></div> <div class="zb-item-text"> <p class="zb-item-now ellipsis">'+item.radioName+'</p> <p class="zb-item-next ellipsis">正在播出：'+item.showName+'</p> </div> <div class="zb-item-icon"></div> </div> </div>'; 
+			    	}
+			    if(_data.length<=0){
+			    	s+='<div class="noDtataTips">暂无数据</div>';
+			    }
+			    $el.html(s);
+			    if (!!fun) {
+			    	fun();
+			    };
+		  	};
+		  	hideLoading();
+		  	dataFlag[""+areaId]={};
+		  	dataFlag[""+areaId].flag=true;
+		  },
+		  error: function(xhr, type){
+		    //alert('network error!');
+		    hideLoading();
+		  }
+
+		});
+}
+function initSwiper(mainId){
+	var _mainId=mainId;
+	var Swiper1 = new Swiper('#swiper-container1',{
+        paginationClickable: !0,
+        slidesPerView: "auto",
+        freeMode: !0 , 
+        initialSlide : _mainId  
+		// ,onTouchStart: function(swiper, even){
+		//  	$(".listType-item.on").removeClass("on");
+		//  	$(".listType-item").eq(Swiper1.activeIndex).addClass("on");	
+		//  	Swiper2.swipeTo(Swiper1.activeIndex,1000,false);			
+		//      console.log(swiper);
+		//     }
+		
+	});
+	var Swiper2 = new Swiper('#swiper-container2',{
+        paginationClickable: !0,
+        initialSlide: _mainId,
+        //slidesPerView: "auto",
+        //freeMode: !0 ,  
+		onSlideChangeEnd: function(swiper, even){
+		 	$(".listType-item.on").removeClass("on");
+		 	$(".listType-item").eq(Swiper2.activeIndex).addClass("on");
+		 	Swiper1.swipeTo(Swiper2.activeIndex,200,false);	
+		 	loadTVlistByType(swiper.activeIndex);
+		 	mainId=swiper.activeIndex;
+
+	 	},
+	 	onFirstInit : function(swiper,event){
+	 		swiper.activeIndex=_mainId;
+	 	}
+	});
+	// Swiper1.params.control = Swiper2;//需要在Swiper2初始化后，Swiper1控制Swiper2
+	// Swiper2.params.control = Swiper1;//需要在Swiper1初始化后，Swiper2控制Swiper1
+	$(".listType-item").eq(Swiper2.activeIndex).addClass("on");
+
+	$("#swiper-container1").on("tap",".listType-item",function(){
+	 	var _this=$(this);
+	 	var _index=_this.index();
+	 	$(".listType-item.on").removeClass("on");
+	 	_this.addClass("on");
+	 	Swiper2.swipeTo(_index,300,false);
+	 	loadTVlistByType(_index);
+	 	mainId=_index;
+	});	
+	// $("#swiper-container2").on("swipe",function(){
+	//  	var _this=$(this);
+	//  	$(".listType-item.on").removeClass("on");
+	//  	$(".listType-item").eq(Swiper2.activeIndex).addClass("on");
+	// });		
+};
+
+$("#container2Wrapper").on("tap",".zb-item-logo",function(){
+	var _this=$(this);
+	var _parent=_this.parent();
+	var _url=_this.attr("data-href");
+	// window.location.hash='?mainId='+mainId+'&subId='+subId;
+	window.location.href=_url;
+	// _parent.siblings().find(".zb-item-logo").removeClass("on");
+	// _this.find(".zb-item-logo").addClass("on");
+})
+.on("tap",".zb-item-icon",function(){
+	var _this=$(this);
+	if (_this.hasClass("on")) {
+		_this.removeClass("on");
+	}else{
+		_this.addClass("on");
+	};
+	
+})
+function getTvTypes(back){
+	showLoading();
+	req=$.ajax({
+	  type: 'GET',
+	  url: serverAddress+'/utvgoClient/interfaces/getFilterWords_list.action?channelId=10056',
+	  // data to be added to query string:
+	  data: {},
+	  // type of data we are expecting in return:
+	  dataType: 'json',
+	  success: function(data){
+  		var _data=data.result[0].areas||[];
+	  	if (data.status==0) {};
+	  	if (!!back) {
+	  		back(_data);
+	  	};
+	  },
+	  error: function(xhr, type){
+	    //alert('network error!');
+	  }
+	});
+
+}
+function initTypesList(typeArr,back){
+	var _typeArr=typeArr;
+	var typeStr="";
+	var listStr="";
+	for (var j = 0,_typeLen=typeArr.length; j < _typeLen; j++) {
+	if(!!!_typeArr[j].name){
+		continue;
+	}
+	typeStr=typeStr+'<li class="listType-item swiper-slide " data-id="'+_typeArr[j].id+'"><span>'+ (_typeArr[j].name||"--")+'</span><!--<i></i> --></li>'; 
+	if (_typeArr[j].id) {
+    	 listStr+='<li id="" class="indexContentBox swiper-slide overflow-scroll-y"></li>';
+    	}
+	};
+	$("#typeList").html(typeStr);
+    $('#container2Wrapper').html(listStr);
+    if (!!back) {
+    	back();
+    };
+    initSwiper();
+	hideLoading();	
+}
+
+
+
+	</script>
+</body>
+
+
+</html>
