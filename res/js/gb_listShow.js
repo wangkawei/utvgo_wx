@@ -11,6 +11,7 @@ var showName=decodeURIComponent(urlParaObj.showName)||"";//contentId=31996
 var playUrl=decodeURIComponent(urlParaObj.playUrl)||"";//contentId=31996
 var islive=false;
 var liveAuth='?id=utvgo&uid=3a163d973ed4c23a8e150212099db671&user=vrrvrmnuwsihilggucfnhhchjidjbjijafgej&appid=10057&uuid=13BD6592188244D0A92C156532C06D372566000006566B00C122';
+liveAuth='';//广播不需要权限验证
 showLoading();
 $(document).ready(function(){
     init();
