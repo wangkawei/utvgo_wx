@@ -55,7 +55,7 @@ function loadTVlistByType(activeIndex,fun){
 	  		var item;
 		    for(var i=0,len=_data.length;i<len;i++){
 		    	item=_data[i];			    	
-		    		s+='<div class="zb-item"> <div  class="zb-item-link clearfix"> <div data-href="./gb_listShow.html?contentId='+item.id+'&fetchRadioId='+item.fetchRadioId+'"  class="zb-item-logo" style=""></div> <div class="zb-item-text"> <p class="zb-item-now ellipsis">'+item.radioName+'</p> <p class="zb-item-next ellipsis">正在播出：'+item.showName+'</p> </div> <div class="zb-item-icon"></div> </div> </div>'; 
+		    		s+='<div class="zb-item"> <div  class="zb-item-link clearfix"> <div data-href="./gb_listShow.html?contentId='+item.id+'&fetchRadioId='+item.fetchRadioId+'"  class="zb-item-logo" style=""></div> <div class="zb-item-text"> <p class="zb-item-now ellipsis">'+item.radioName+'</p> <p class="zb-item-next ellipsis">正在播出：'+item.showName+'</p> </div> <!--<div class="zb-item-icon"></div>--> </div> </div>'; 
 		    	}
 		    if(_data.length<=0){
 		    	s+='<div class="noDtataTips">暂无数据</div>';
@@ -145,7 +145,8 @@ $("#container2Wrapper").on("tap",".zb-item-logo",function(){
 		_this.addClass("on");
 	};
 	
-})
+});
+
 function getTvTypes(back){
 	showLoading();
 	req=$.ajax({

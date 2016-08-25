@@ -315,7 +315,7 @@ function detailTabInitShow(){
 			}
 		});
 
-		wx.hideOptionMenu();//隐藏右上角菜单按钮
+		//wx.hideOptionMenu();//隐藏右上角菜单按钮
 	});
 
 
