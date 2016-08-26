@@ -9,6 +9,8 @@ var accountObj=JSON.parse(account);
 var userId=''; 
 if(!!account&&!!accountObj){
 	userId=accountObj.userId||'1517';
+}else{
+	userId=1517;
 }
 //userId=1517;//用户帐号 用于测试
 
