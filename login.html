@@ -59,6 +59,7 @@
 		<div class="forgetPassword"><a href="#">忘记密码></a></div>
 		<button class="login-submit">登录</button>
 	</div>
+	<div class="goRegBt-wrapper qrLoginBt-wrapper"><a class="qrLoginBt">广电号扫码登录</a></div>
 	<div class="goRegBt-wrapper"><a href="register.html">快速注册></a></div>
 
 	<script type="text/javascript" src="./res/js/lib/zepto-1.1.6.js"></script>
@@ -114,6 +115,17 @@
 				},
 				error: function(xhr, type){
 					$el.html('登录');
+				}
+			});
+		});
+
+		$('.qrLoginBt').on('tap',function(e){
+			wx.scanQRCode({
+			    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+			    success: function (res) {
+				    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+				    alert(result);
 				}
 			});
 		});

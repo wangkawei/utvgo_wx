@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="./res/css/base.css?v=f64bdde28d" />
     <link rel="stylesheet" href="./res/css/idangerous.swiper.css?v=a769a5281c" />
     <link rel="stylesheet" href="./res/css/main.css?v=f08710d5bd" />
-    <link rel="stylesheet" href="./res/css/login.css?v=a4f1918666" />
+    <link rel="stylesheet" href="./res/css/login.css?v=3f752309f4" />
     <style type="text/css">
 		html,body{
 			
@@ -59,6 +59,7 @@
 		<div class="forgetPassword"><a href="#">忘记密码></a></div>
 		<button class="login-submit">登录</button>
 	</div>
+	<div class="goRegBt-wrapper qrLoginBt-wrapper"><a class="qrLoginBt">广电号扫码登录</a></div>
 	<div class="goRegBt-wrapper"><a href="register.html">快速注册></a></div>
 
 	<script type="text/javascript" src="./res/js/lib/zepto-1.1.6.js?v=8155cb4235"></script>
@@ -68,7 +69,7 @@
 	<script type="text/javascript" src="./res/js/lib/md5.js?v=09d5406a36"></script>
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
-	<script type="text/javascript" src="./res/js/main.js?v=0cd4778686"></script>
+	<script type="text/javascript" src="./res/js/main.js?v=c16bfd9c3f"></script>
 
 	<script>
 		$('.login-submit').on('tap',function(e){
@@ -114,6 +115,17 @@
 				},
 				error: function(xhr, type){
 					$el.html('登录');
+				}
+			});
+		});
+
+		$('.qrLoginBt').on('tap',function(e){
+			wx.scanQRCode({
+			    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+			    success: function (res) {
+				    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+				    alert(result);
 				}
 			});
 		});

@@ -167,3 +167,27 @@ appName, @"programName",
 sysVersion, @"sysVersion",
 type, @"clientType",
 strCarrierName, @"netType",
+
+
+
+
+http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxContentList.action?boxId=7695&pagesize=1000
+
+http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxList.action?channelId=5&pagesize=10&pager.offset=0&typeId=10470
+
+http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxDetail.action?channelId=5&boxId=2140&zoneid=17&pagesize=1000
+
+http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxContentList.action?boxId=7695&pagesize=1000
+
+http://27.36.116.72/utvgoClient/interfaces/clientInterface_getInterfaceList.action?clientType=iPhone&version=2.8
+
+
+
+
+详情页接口
+http://app.utvgo.com:8099/utvgoClient/tvutvgo/channel/ajaxContentList.action?boxId=7695&pagesize=1000
+http://app.utvgo.com:8099/utvgoClient/tvutvgo/channel/ajaxList.action?channelId=5&pagesize=10&pager.offset=0&typeId=10470
+
+播放页接口
+http://app.utvgo.com:8099/utvgoClient/tvutvgo/channel/ajaxDetail.action?channelId=5&boxId=2140&zoneid=17&pagesize=1000
+http://app.utvgo.com:8099/utvgoClient/tvutvgo/channel/ajaxContentList.action?boxId=7695&pagesize=1000
