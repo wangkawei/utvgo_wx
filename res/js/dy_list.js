@@ -215,7 +215,9 @@ function getNewData(action){
 		dataType: 'json',
 		success: function(data){
 			hideLoading();
-			if(!!!data.pm){
+			if(!!!data||!!!data.pm){
+				$('.nomore').show().html('没有更多了!');
+				ajaxMore=true;//最后一页了，设置ajaxMore避免再请求
 				return;
 			}
 			renderListData(data.pm.records||[],action);
@@ -240,7 +242,12 @@ function renderListData(data,action){
 		}else{
 			dyOrDsjType='dy';
 		}
-		s+='<div class="rmdy-item"><a href="dyDetail.html?channelId='+channelId+'&contentId='+data[i].id+'&type='+(dyOrDsjType||'dy')+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
+		if(data[i].mediaNum>1&&data[i].utvgotvsupplierid<=0){
+			//期模式,去期列表
+			s+='<div class="rmdy-item"><a href="list_set.html?qdId='+data[i].id+'&qdName='+data[i].contentName+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
+		}else{
+			s+='<div class="rmdy-item"><a href="dyDetail.html?channelId='+channelId+'&contentId='+data[i].id+'&type='+(dyOrDsjType||'dy')+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
+		}
 	}
 
 	if(!!!action||action=='new'){

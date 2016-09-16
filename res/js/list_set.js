@@ -72,7 +72,7 @@ function getNewData(action){
 		dataType: 'json',
 		success: function(data){
 			hideLoading();
-			renderListData(data.pm.records||[],action);
+			renderListData(data.pm.records||[],action,data.pm.total);
 		},
 		error: function(xhr, type){
 			ajaxMore=null;
@@ -82,14 +82,14 @@ function getNewData(action){
 }
 
 var playList=[];
-function renderListData(data,action){
+function renderListData(data,action,total){
 	var s='';
 	var data=data||[];
 	for(var i= 0,len=data.length;i<len;i++){
 		if(data[i].tvgoImg.indexOf('http://')==-1){
 			data[i].tvgoImg=imgBasePath + data[i].tvgoImg;
 		}
-		s+='<div class="commonList-item"> <a data-remark="'+data[i].remark+'" data-href="./play_sn.html?playName='+encodeURIComponent(data[i].recommendContentName||data[i].contentName)+'&playUrl='+encodeURIComponent(data[i].playUrl||data[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(data[i].tvgoImg)+'&contentId='+encodeURIComponent(data[i].contentId)+'&col='+(data[i].mediaNumber>1 ? 3 : 3)+'&type='+encodeURIComponent('qi')+'&mediaNumber='+encodeURIComponent(data[i].mediaNumber)+'" class="commonList-item-link clearfix"> <div class="commonList-item-img"> <img src="'+data[i].tvgoImg+'" /> </div> <div class="commonList-item-text-wrapper"> <p class="commonList-item-text">'+(data[i].recommendContentName||data[i].contentName)+'</p> <span class="commonList-item-type-text"><!--'+data[i].createTime.split(' ')[0]+'&nbsp;&nbsp;&nbsp;-->'+data[i].typeName+'</span> </div> </a> </div>';
+		s+='<div class="commonList-item"> <a data-remark="'+data[i].remark+'" data-href="./play_sn.html?playName='+encodeURIComponent(data[i].recommendContentName||data[i].contentName)+'&playUrl='+encodeURIComponent(data[i].playUrl||data[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(data[i].tvgoImg)+'&contentId='+encodeURIComponent(data[i].contentId)+'&col='+(total>0 ? 3 : 3)+'&type='+encodeURIComponent('qi')+'&mediaNumber='+encodeURIComponent(total)+'" class="commonList-item-link clearfix"> <div class="commonList-item-img"> <img src="'+data[i].tvgoImg+'" /> </div> <div class="commonList-item-text-wrapper"> <p class="commonList-item-text">'+(data[i].recommendContentName||data[i].contentName)+'</p> <span class="commonList-item-type-text"><!--'+data[i].createTime.split(' ')[0]+'&nbsp;&nbsp;&nbsp;-->'+data[i].typeName+'</span> </div> </a> </div>';
 	}
 
 	if(!!!action||action=='new'){
