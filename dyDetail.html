@@ -111,24 +111,26 @@
 	<script type="text/javascript" src="./res/js/main.js"></script>
 	<script type="text/javascript">
 	var urlParaObj=getUrlPara();//contentId=31996
+	var channelId=urlParaObj.channelId||0;
 	var contentId=urlParaObj.contentId||0;
 	var type=urlParaObj.type||'dy';
 	if(type=='dm'){
 		type='dsj';
 	}
+
 	function getdata(){
+		//serverAddress+'/utvgoClient/interfaces/hdtvContent_'+type+'Detail.action'
+		var url=serverAddress+'/utvgoClient/tvutvgo/channel/ajaxDetail.action';
+		//channelId=10085&boxId=9287&zoneid=17&pagesize=1000
 		$.ajax({
 		  type: 'GET',
-		  url: serverAddress+'/utvgoClient/interfaces/hdtvContent_'+type+'Detail.action',
+		  url: url,
 		  // data to be added to query string:
-		  data: {contentId:contentId},
+		  data: {channelId:channelId,boxId:contentId,zoneId:17,pagesize:1000},
 		  // type of data we are expecting in return:
 		  dataType: 'json',
 		  success: function(data){
-		  	if(data.status!=0){
-		  		alert(data.result);
-		  		return;
-		  	}
+
 		    renderDetailTop(data);
 
 		    renderDetailTab(data);
@@ -140,60 +142,75 @@
 	}
 	getdata();
 	function renderDetailTop(data){
-		document.title=data.result.content.name;
-		var s='<div class="dyDetailTop-img"><img src="'+data.result.content.imageAddress+'" /></div> <div class="dyDetail-top-text"> <table> <tbody> <tr> <td class="dyDetail-top-item-name">年份：</td> <td>'+data.result.content.playTime+'</td> </tr> <tr> <td class="dyDetail-top-item-name">类型：</td> <td>家庭剧；'+data.result.content.type+'</td> </tr> <tr> <td class="dyDetail-top-item-name">主演：</td> <td>'+data.result.content.player+'</td> </tr> <tr> <td class="dyDetail-top-item-name">导演：</td> <td>'+data.result.content.director+'</td> </tr> <tr> <td class="dyDetail-top-item-name">语言：</td> <td>'+data.result.content.language+'</td> </tr> </tbody> </table> </div>';
+		document.title=data.snet_ContentBox.contentName;
+		if(data.snet_ContentBox.tvgoImg.indexOf('http://')==-1){
+			data.snet_ContentBox.tvgoImg=imgBasePath+data.snet_ContentBox.tvgoImg;
+		}
+		var typename=[];
+		if(!!data.typeList&&data.typeList.length>0){
+			for(var ii= 0,iilen=data.typeList.length;ii<iilen;ii++){
+				typename.push(data.typeList[ii].typename);
+			}
+			typename=typename.join(',');
+		}else{
+			typename='';
+		}
+
+		var s='<div class="dyDetailTop-img"><img src="'+data.snet_ContentBox.tvgoImg+'" /></div> <div class="dyDetail-top-text"> <table> <tbody> <tr> <td class="dyDetail-top-item-name">年份：</td> <td>'+data.snet_ContentBox.playTime.split(' ')[0]+'</td> </tr> <tr> <td class="dyDetail-top-item-name">类型：</td> <td>'+typename+'</td> </tr> <tr> <td class="dyDetail-top-item-name">主演：</td> <td>'+data.snet_ContentBox.player+'</td> </tr> <tr> <td class="dyDetail-top-item-name">导演：</td> <td>'+data.snet_ContentBox.director+'</td> </tr> <tr> <td class="dyDetail-top-item-name">语言：</td> <td>'+(!!data.lan ? data.lan.lanname :'-')+'</td> </tr> </tbody> </table> </div>';
 
 		$('#dyDetailTop').html(s);
 		s='';
-		if(type=='dy'){
-			var items=data.result.content.urls||[];
-			for(var i=0,len=items.length;i<len;i++){
-				s+='<a href="'+items[i].playUrl+'" class="sourceItem">'+items[i].provider+'</a>'
-			}
-		}
-		if(type=='dsj'){
-			var items=data.result.suppliers||[];
-			for(var i=0,len=items.length;i<len;i++){
-				s+='<a href="'+items[i].urls[0]+'" class="sourceItem">'+items[i].supplier+'</a>'
-			}
-		}
-		var ss='<div style="padding-bottom: 10px;">播放来源:</div> <div class="clearfix"> '+s+' </div>';
+
+		var contentBox=data.snet_ContentBox;
+		var pm=data.pm||{};
+		//./play_sn.html?playName='+encodeURIComponent(data[i].recommendContentName||data[i].contentName)+'&playUrl='+encodeURIComponent(data[i].playUrl||data[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(data[i].tvgoImg)+'&contentId='+encodeURIComponent(data[i].contentId)+'&col='+(data[i].mediaNumber>1 ? 3 : 3)+'&type='+encodeURIComponent('qi')+'&mediaNumber='+encodeURIComponent(data[i].mediaNumber)
+		s='<a href="./play_sn.html?playName='+encodeURIComponent(contentBox.recommendContentName||contentBox.contentName)+'&playUrl='+(contentBox.playUrl||contentBox.tvgoPlayurl||pm.records[0].playUrl||pm.records[0].tvgoPlayurl)+'&playImg='+encodeURIComponent(contentBox.tvgoImg)+'&contentId='+encodeURIComponent(contentBox.contentId)+'&col='+(contentBox.mediaNumber>1 ? 3 : 2)+'&type='+(contentBox.mediaNumber>1 ? 'ji' : 'dy')+'&mediaNumber='+encodeURIComponent(contentBox.mediaNumber)+'" class="sourceItem">'+'立即播放'+'</a>';
+
+
+		var ss='<div style="padding-bottom: 10px;"><!--播放来源:--></div> <div class="clearfix"> '+s+' </div>';
 		$('#dySourceBar').html(ss);
 	}
 	function renderDetailTab(data){
+
+		var contentBox=data.snet_ContentBox;
 		var col=2;
 		var s='';
 		if(type=='dy'){
 			col=2;
 			s+='<div class="detailTabBar col'+col+' clearfix"> <div class="detailTabItem"> <span class="detailTab-text">猜你喜欢</span> </div> <div class="detailTabItem"> <span class="detailTab-text">简介</span> </div> </div>';
-			var lkList='';
+			/*var lkList='';
 			var items=data.result.relatives||[];
 			for(var i=0,len=items.length;i<len;i++){
 				lkList+='<div class="rmdy-item"> <a href="./dyDetail.html?contentId='+items[i].id+'&type='+type+'" class="rmdy-item-link"><img src="'+items[i].img+'" /> <p class="rdzx-text ellipsis">'+items[i].name+'</p></a> </div>';
 			}
 			s+='<div class="detailTabItemContent indexContentBox clearfix">'+lkList+'</div>';
-			s+='<div class="detailTabItemContent"> <div class="detail-profile"> <p>'+data.result.content.remark.replace('\r\n','</p><p>')+'</p></div> </div>'
+			s+='<div class="detailTabItemContent"> <div class="detail-profile"> <p>'+data.result.content.remark.replace('\r\n','</p><p>')+'</p></div> </div>'*/
 		}
 
 		if(type=='dsj'){
 			col=3;
 			s+='<div class="detailTabBar col'+col+' clearfix"> <div class="detailTabItem"> <span class="detailTab-text">选集</span> </div> <div class="detailTabItem"> <span class="detailTab-text">猜你喜欢</span> </div> <div class="detailTabItem"> <span class="detailTab-text">简介</span> </div> </div>';
 			var jiList='';
-			var items=data.result.suppliers[0]||[];
-			if(!!items.urls){
-				for(var i=0,len=items.urls.length;i<len;i++){
-					jiList+='<a href="'+items.urls[i]+'" class="detail-jiList-item">'+items.numbers[i]+'</a>';
+
+			var items=data.pm.records||[];
+			var playPageHref='';
+			for(var i=0,len=items.length;i<len;i++){
+				if(items[i].tvgoImg.indexOf('http://')==-1){
+					items[i].tvgoImg=imgBasePath+items[i].tvgoImg;
 				}
+				playPageHref='./play_sn.html?playName='+encodeURIComponent(items[i].contentName)+'&playUrl='+(items[i].playUrl||items[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(items[i].tvgoImg)+'&contentId='+encodeURIComponent(items[i].contentId)+'&col='+(contentBox.mediaNumber>1 ? 3 : 2)+'&type='+(contentBox.mediaNumber>1 ? 'ji' : 'dy')+'&mediaNumber='+encodeURIComponent(contentBox.mediaNumber);
+				jiList+='<a href="'+playPageHref+'" class="detail-jiList-item">'+items[i].recommendContentName+'</a>';
 			}
+
 			s+='<div class="detailTabItemContent detail-jiList clearfix">'+jiList+'</div>';
 
-			var lkList='';
+			/*var lkList='';
 			var items=data.result.relatives||[];
 			for(var i=0,len=items.length;i<len;i++){
 				lkList+='<div class="rmdy-item"> <a href="./dyDetail.html?contentId='+items[i].id+'&type='+type+'" class="rmdy-item-link"><img src="'+items[i].img+'" /> <p class="rdzx-text ellipsis">'+items[i].name+'</p></a> </div>';
 			}
 			s+='<div class="detailTabItemContent indexContentBox clearfix">'+lkList+'</div>';
-			s+='<div class="detailTabItemContent"> <div class="detail-profile"> <p>'+data.result.content.remark.replace('\r\n','</p><p>')+'</p></div> </div>'
+			s+='<div class="detailTabItemContent"> <div class="detail-profile"> <p>'+data.result.content.remark.replace('\r\n','</p><p>')+'</p></div> </div>'*/
 		}
 		$('.detailTabBox').each(function(i,n){
 			$(n).html(s);

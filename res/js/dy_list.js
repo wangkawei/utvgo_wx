@@ -52,12 +52,16 @@ areaId=0;
 yearId=0;
 pageSize=10;
 var typeName='全部类型',areaName='全部地区',yearName='全部年份';
+var dyOrDsjType='dy';//dy or dsj(dm)
 
-if(parseInt(channelId,10)==3){
+if(parseInt(channelId,10)==10086){//3
 	$('.topNav-title').html('电视剧');
 }
-if(parseInt(channelId,10)==7){
+if(parseInt(channelId,10)==10087){//7
 	$('.topNav-title').html('动漫');
+}
+if(parseInt(channelId,10)==10085){//2
+	$('.topNav-title').html('电影');
 }
 
 function getTypeData(){
@@ -198,16 +202,23 @@ function getNewData(action){
 	if(action=='new'){
 		showLoading();
 	}
+	var offset=(parseInt(pageNo,10)-1)*pageSize;
+
+	////utvgoClient/tvutvgo/channel/ajaxList.action?channelId=5&pagesize=10&pager.offset=0&typeId=10470
+	var url=serverAddress+'/utvgoClient/tvutvgo/channel/ajaxList.action';
 	ajaxMore=$.ajax({
 		type: 'GET',
-		url: serverAddress+'/utvgoClient/interfaces/hdtvContent_listChannelData.action',
+		url: url, //serverAddress+'/utvgoClient/interfaces/hdtvContent_listChannelData.action'
 		// data to be added to query string:
-		data: {channelId:channelId,pageSize:pageSize,pageNo:pageNo,publishYear:yearId,typeId:typeId,areaId:areaId},
+		data: {channelId:channelId,pagesize:pageSize,'pager.offset':offset,pageNo:pageNo,year:yearId,typeId:typeId,areaId:areaId},
 		// type of data we are expecting in return:
 		dataType: 'json',
 		success: function(data){
 			hideLoading();
-			renderListData(data.result,action);
+			if(!!!data.pm){
+				return;
+			}
+			renderListData(data.pm.records||[],action);
 		},
 		error: function(xhr, type){
 			ajaxMore=null;
@@ -221,7 +232,15 @@ function renderListData(data,action){
 	var s='';
 	var data=data||[];
 	for(var i= 0,len=data.length;i<len;i++){
-		s+='<div class="rmdy-item"><a href="dyDetail.html?contentId='+data[i].id+'&type='+(data[i].type||'dy')+'" class="rmdy-item-link"><img src="'+data[i].img+'" /><p class="rdzx-text ellipsis">'+data[i].name+'</p></a></div>';
+		if(data[i].tvgoImg.indexOf('http://')==-1){
+			data[i].tvgoImg=imgBasePath+data[i].tvgoImg;
+		}
+		if(data[i].mediaNum >= 2){
+			dyOrDsjType='dsj';
+		}else{
+			dyOrDsjType='dy';
+		}
+		s+='<div class="rmdy-item"><a href="dyDetail.html?channelId='+channelId+'&contentId='+data[i].id+'&type='+(dyOrDsjType||'dy')+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
 	}
 
 	if(!!!action||action=='new'){

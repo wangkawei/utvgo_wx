@@ -32,7 +32,7 @@
 		try{localStorage.setItem('playList','');}catch(err){}
 		if(col>2) duojiType='ji';
 		
-		if(!!playList&&type=='qd'){
+		if(!!playList&&(type=='qd'||type=='qi')){
 			duojiType='qi';
 			col=3;
 			qiDataList=JSON.parse(playList);
@@ -188,7 +188,7 @@
 		var items=qiDataList||[];
 		var s='';
 		for(var i=0,len=items.length;i<len;i++){
-			s+='<div class="commonList-item" data-remark="'+items[i].remark+'" data-playurl="'+items[i].playUrl+'" data-img="'+items[i].img+'" title="'+items[i].name+'"><a class="commonList-item-link clearfix"> <div class="commonList-item-img"> <img src="'+items[i].img+'" /> </div> <div class="commonList-item-text-wrapper"> <p class="commonList-item-text">'+items[i].name+'</p> <span class="commonList-item-type-text">'+items[i].createTime+'&nbsp;&nbsp;&nbsp;'+items[i].type+'</span> </div> </a> </div>';
+			s+='<div class="commonList-item" data-remark="'+items[i].remark+'" data-playurl="'+(items[i].playUrl||items[i].tvgoPlayurl)+'" data-img="'+items[i].tvgoImg+'" title="'+(items[i].recommendContentName||items[i].contentName)+'"><a class="commonList-item-link clearfix"> <div class="commonList-item-img"> <img src="'+items[i].tvgoImg+'" /> </div> <div class="commonList-item-text-wrapper"> <p class="commonList-item-text">'+(items[i].recommendContentName||items[i].contentName)+'</p> <span class="commonList-item-type-text"><!--'+items[i].createTime.split(' ')[0]+'&nbsp;&nbsp;&nbsp;-->'+items[i].typeName+'</span> </div> </a> </div>';
 		}
 		$('#duojiListBox').html(s);
 

@@ -1,8 +1,11 @@
 //基础配置
 //http://120.31.66.15:8080/
 var hostName='http://app.utvgo.com';//http://120.31.66.15';//http://app.utvgo.com:8099/utvgoClient/interfaces/main_index.action
+hostName='http://27.36.116.72';
 var hostPort=8099;
+hostPort=80;
 var serverAddress=hostName+':'+hostPort;
+var imgBasePath='http://120.31.66.14:82/uploadFile/';
 
 var account=localStorage.getItem('account');
 var accountObj=JSON.parse(account);
