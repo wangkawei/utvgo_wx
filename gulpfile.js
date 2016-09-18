@@ -127,7 +127,6 @@ gulp.task('res-js-lib',function(){
 	return gulp.src(['res/temp/rev-js-lib/*.json','./res/temp/img-html/*.html'])
 	.pipe(revCollector())
 	.pipe(gulp.dest('./res/temp/js-lib-html'))
-
 })
 //合并压缩项目的js
 gulp.task('js-own',function(){
@@ -135,7 +134,7 @@ gulp.task('js-own',function(){
 		//.pipe(concat('all.js'))
 		//.pipe(gulp.dest('./dest/res/js'))
 		//.pipe(rename({suffix:'.min'}))
-		.pipe(uglify())
+		//.pipe(uglify())
 		.pipe(gulp.dest('./dest/res/js'))
 		.pipe(rev())
 		.pipe(rev.manifest())

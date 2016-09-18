@@ -2,10 +2,13 @@
 //http://120.31.66.15:8080/
 var hostName='http://app.utvgo.com';//http://120.31.66.15';//http://app.utvgo.com:8099/utvgoClient/interfaces/main_index.action
 hostName='http://27.36.116.72';
+//hostName='http://192.168.4.55';
 var hostPort=8099;
 hostPort=80;
+//hostPort=8080;
 var serverAddress=hostName+':'+hostPort;
 var imgBasePath='http://120.31.66.14:82/uploadFile/';
+imgBasePath='http://27.36.116.72:81/snet/uploadFile/';
 
 var account=localStorage.getItem('account');
 var accountObj=JSON.parse(account);

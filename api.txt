@@ -216,3 +216,5 @@ http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxDetail.action?channelId=1008
 这个列表请求接口对电视剧 有bug，综艺就没有
 http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxList.action?channelId=10086&pagesize=100&pager.offset=2
 
+
+http://192.168.4.55:8080/utvgoClient/tvutvgo/channel/ajaxList.action?channelId=10085&pagesize=10&pager.offset=1&typeId=0&year=2016&areaId=0

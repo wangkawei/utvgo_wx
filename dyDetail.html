@@ -164,7 +164,7 @@
 		var contentBox=data.snet_ContentBox;
 		var pm=data.pm||{};
 		//./play_sn.html?playName='+encodeURIComponent(data[i].recommendContentName||data[i].contentName)+'&playUrl='+encodeURIComponent(data[i].playUrl||data[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(data[i].tvgoImg)+'&contentId='+encodeURIComponent(data[i].contentId)+'&col='+(data[i].mediaNumber>1 ? 3 : 3)+'&type='+encodeURIComponent('qi')+'&mediaNumber='+encodeURIComponent(data[i].mediaNumber)
-		s='<a href="./play_sn.html?playName='+encodeURIComponent(contentBox.recommendContentName||contentBox.contentName)+'&playUrl='+(contentBox.playUrl||contentBox.tvgoPlayurl||pm.records[0].playUrl||pm.records[0].tvgoPlayurl)+'&playImg='+encodeURIComponent(contentBox.tvgoImg)+'&contentId='+encodeURIComponent(contentBox.contentId)+'&col='+(pm.records.length>0 ? 3 : 2)+'&type='+(pm.records.length>0 ? 'ji' : 'dy')+'&mediaNumber='+encodeURIComponent(pm.records.length)+'" class="sourceItem">'+'立即播放'+'</a>';
+		s='<a href="./play_sn.html?playName='+encodeURIComponent(contentBox.recommendContentName||contentBox.contentName)+'&playUrl='+(contentBox.playUrl||contentBox.tvgoPlayurl||pm.records[0].playUrl||pm.records[0].tvgoPlayurl)+'&playImg='+encodeURIComponent(contentBox.tvgoImg)+'&currentIndex=0&boxId='+contentId+'&channelId='+contentBox.channelId+'&contentId='+encodeURIComponent(contentBox.contentId)+'&col='+(pm.records.length>0 ? 3 : 2)+'&type='+(pm.records.length>0 ? 'ji' : 'dy')+'&mediaNumber='+encodeURIComponent(pm.records.length)+'" class="sourceItem">'+'立即播放'+'</a>';
 
 
 		var ss='<div style="padding-bottom: 10px;"><!--播放来源:--></div> <div class="clearfix"> '+s+' </div>';
@@ -188,7 +188,7 @@
 				lkList+='<div class="rmdy-item"> <a href="./dyDetail.html?contentId='+items[i].id+'&type='+type+'" class="rmdy-item-link"><img src="'+items[i].img+'" /> <p class="rdzx-text ellipsis">'+items[i].name+'</p></a> </div>';
 			}
 			 */
-			s+='<div class="detailTabItemContent indexContentBox clearfix">'+lkList+'</div>';
+			s+='<div class="detailTabItemContent indexContentBox clearfix dyDetail-likeListBox">'+lkList+'</div>';
 			s+='<div class="detailTabItemContent"> <div class="detail-profile"> <p>'+contentBox.remark.replace('\r\n','</p><p>')+'</p></div> </div>'
 		}
 
@@ -203,7 +203,7 @@
 				if(items[i].tvgoImg.indexOf('http://')==-1){
 					items[i].tvgoImg=imgBasePath+items[i].tvgoImg;
 				}
-				playPageHref='./play_sn.html?playName='+encodeURIComponent(items[i].contentName)+'&playUrl='+(items[i].playUrl||items[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(items[i].tvgoImg)+'&contentId='+encodeURIComponent(items[i].contentId)+'&col='+( 3 )+'&type='+('ji')+'&mediaNumber='+encodeURIComponent(len);
+				playPageHref='./play_sn.html?playName='+encodeURIComponent(items[i].contentName)+'&playUrl='+(items[i].playUrl||items[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(items[i].tvgoImg)+'&currentIndex='+i+'&boxId='+contentId+'&channelId='+items[i].channelId+'&contentId='+encodeURIComponent(items[i].contentId)+'&col='+( 3 )+'&type='+('ji')+'&mediaNumber='+encodeURIComponent(len);
 				jiList+='<a href="'+playPageHref+'" class="detail-jiList-item">'+items[i].recommendContentName+'</a>';
 			}
 
@@ -216,15 +216,81 @@
 				lkList+='<div class="rmdy-item"> <a href="./dyDetail.html?contentId='+items[i].id+'&type='+type+'" class="rmdy-item-link"><img src="'+items[i].img+'" /> <p class="rdzx-text ellipsis">'+items[i].name+'</p></a> </div>';
 			}
 			*/
-			s+='<div class="detailTabItemContent indexContentBox clearfix">'+lkList+'</div>';
+			s+='<div class="detailTabItemContent indexContentBox clearfix dyDetail-likeListBox">'+lkList+'</div>';
 
 			s+='<div class="detailTabItemContent"> <div class="detail-profile"> <p>'+contentBox.remark.replace('\r\n','</p><p>')+'</p></div> </div>'
+			//保存集数据到本地
+			try{
+				localStorage.setItem('duojiDatas',JSON.stringify(data.pm.records));
+			}catch(err){}
 		}
 		$('.detailTabBox').each(function(i,n){
 			$(n).html(s);
 		});
 
+
 		detailTabInitShow();
+		getLikeData();
+	}
+
+	function getLikeData(){
+		showLoading();
+		var offset=0;
+		var pageSize=10;
+		var pageNo=1;
+		var yearId=0;
+		var areaId=0;
+		var typeId=0;
+		////utvgoClient/tvutvgo/channel/ajaxList.action?channelId=5&pagesize=10&pager.offset=0&typeId=10470
+		var url=serverAddress+'/utvgoClient/tvutvgo/channel/ajaxList.action';
+		$.ajax({
+			type: 'GET',
+			url: url, //serverAddress+'/utvgoClient/interfaces/hdtvContent_listChannelData.action'
+			// data to be added to query string:
+			data: {channelId:channelId,pagesize:pageSize,'pager.offset':offset,pageNo:pageNo,year:yearId,typeId:typeId,areaId:areaId},
+			// type of data we are expecting in return:
+			dataType: 'json',
+			success: function(data){
+				hideLoading();
+				if(!!!data||!!!data.pm){
+					//最后一页了，设置ajaxMore避免再请求
+					return;
+				}
+				renderLikeList(data.pm.records||[]);
+			},
+			error: function(xhr, type){
+				hideLoading();
+				//alert('network error!');
+			}
+		});	
+	}
+
+	function renderLikeList(data){
+		var s='';
+		var items=data||[];
+		for(var i=0,len=items.length;i<len;i++){
+			//?channelId=10086&contentId=9319&type=dsj
+			if(items[i].tvgoImg.indexOf('http://')==-1){
+				items[i].tvgoImg=imgBasePath+items[i].tvgoImg;
+			}
+			if(parseInt(items[i].contentId,10)==parseInt(contentId,10)){
+				continue;
+			}
+			s+='<div class="rmdy-item"> <a data-href="./dyDetail.html?channelId='+items[i].channelId+'&contentId='+items[i].id+'&type='+type+'" onclick="likeListClick(this);" class="rmdy-item-link"><img src="'+items[i].tvgoImg+'" /> <p class="rdzx-text ellipsis">'+items[i].contentName+'</p></a> </div>';
+		}
+		if(items.length<=0){
+			s='<div>无数据！</div>';
+		}
+		$('.dyDetail-likeListBox').html(s);
+		setTimeout(function(){
+			var w=$('.rmdy-item-link').width();
+			var h=w/(210/280);
+			$('.rmdy-item-link img').height(h);
+		},0);
+	}
+	function likeListClick(el){
+		var url=$(el).attr('data-href');
+		window.location.replace(url);
 	}
 
 	</script>

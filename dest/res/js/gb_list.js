@@ -1,1 +1,193 @@
-function init(){getTvTypes(function(i){initTypesList(i,function(){loadTVlistByType(mainId,function(){})})})}function loadTVlistByType(i,e){var a=i,t=$("#typeList .swiper-slide").eq(a).attr("data-id"),n=$("#container2Wrapper .swiper-slide").eq(a);return(!dataFlag[""+t]||!dataFlag[""+t].flag)&&(req&&(req.abort(),req=null),showLoading(),void(req=$.ajax({type:"GET",url:serverAddress+"/utvgoClient/interfaces/getRadio_list.action?pageNo=1&pageSize=1000&areaId="+t,dataType:"json",success:function(i){if(0==i.status){for(var a,s=i.result,o="",d=0,r=s.length;d<r;d++)a=s[d],o+='<div class="zb-item"> <div  class="zb-item-link clearfix"> <div data-href="./gb_listShow.html?contentId='+a.id+"&fetchRadioId="+a.fetchRadioId+'"  class="zb-item-logo" style=""></div> <div class="zb-item-text"> <p class="zb-item-now ellipsis">'+a.radioName+'</p> <p class="zb-item-next ellipsis">正在播出：'+a.showName+'</p> </div> <!--<div class="zb-item-icon"></div>--> </div> </div>';s.length<=0&&(o+='<div class="noDtataTips">暂无数据</div>'),n.html(o),e&&e()}hideLoading(),dataFlag[""+t]={},dataFlag[""+t].flag=!0},error:function(i,e){}})))}function initSwiper(i){var e=new Swiper("#swiper-container1",{paginationClickable:!0,slidesPerView:"auto",freeMode:!0,initialSlide:i}),a=new Swiper("#swiper-container2",{paginationClickable:!0,initialSlide:i,onSlideChangeEnd:function(i,t){$(".listType-item.on").removeClass("on"),$(".listType-item").eq(a.activeIndex).addClass("on"),e.swipeTo(a.activeIndex,200,!1),loadTVlistByType(i.activeIndex),mainId=i.activeIndex},onFirstInit:function(e,a){e.activeIndex=i}});$(".listType-item").eq(a.activeIndex).addClass("on"),$("#swiper-container1").on("tap",".listType-item",function(){var i=$(this),e=i.index();$(".listType-item.on").removeClass("on"),i.addClass("on"),a.swipeTo(e,300,!1),loadTVlistByType(e),mainId=e})}function getTvTypes(i){showLoading(),req=$.ajax({type:"GET",url:serverAddress+"/utvgoClient/interfaces/getFilterWords_list.action?channelId=10056",data:{},dataType:"json",success:function(e){var a=e.result[0].areas||[];0==e.status,i&&i(a)},error:function(i,e){}})}function initTypesList(i,e){for(var a=i,t="",n="",s=0,o=i.length;s<o;s++)a[s].name&&(t=t+'<li class="listType-item swiper-slide " data-id="'+a[s].id+'"><span>'+(a[s].name||"--")+"</span><!--<i></i> --></li>",a[s].id&&(n+='<li id="" class="indexContentBox swiper-slide overflow-scroll-y"></li>'));$("#typeList").html(t),$("#container2Wrapper").html(n),initSwiper(mainId),hideLoading(),e&&e()}var dataFlag={},req=null,urlParaObj={},mainId=0;showLoading(),$(document).ready(function(){urlParaObj=getUrlPara(),mainId=sessionStorage.getItem("audioArea")||0,mainId=parseInt(mainId,10),sessionStorage.removeItem("audioArea"),init()}),$("#container2Wrapper").on("tap",".zb-item-logo",function(){var i=$(this),e=(i.parent(),i.attr("data-href"));sessionStorage.setItem("audioArea",mainId),window.location.href=e}).on("tap",".zb-item-icon",function(){var i=$(this);i.hasClass("on")?i.removeClass("on"):i.addClass("on")});
+
+var dataFlag={};
+var req=null;
+var urlParaObj={};//
+var mainId=0;
+showLoading();	
+$(document).ready(function () {
+	urlParaObj=getUrlPara();//
+	mainId=sessionStorage.getItem('audioArea')||0;
+	mainId=parseInt(mainId,10);
+	sessionStorage.removeItem('audioArea');
+	init();
+
+});
+
+function init(){
+
+	getTvTypes(function(data){
+		initTypesList(data,function(){
+			loadTVlistByType(mainId,function(){
+				//$("#container2Wrapper .indexContentBox ").eq(mainId).find(".zb-item-logo").eq(subId).addClass("on");
+			});
+			//initSwiper(mainId);
+
+		});
+	});	
+}
+
+function loadTVlistByType(activeIndex,fun){
+	// var i=swiper.activeIndex;
+	var i=activeIndex;
+	var areaId=$('#typeList .swiper-slide').eq(i).attr('data-id');
+	var $el=$('#container2Wrapper .swiper-slide').eq(i);
+	if (!!dataFlag[""+areaId]&&!!dataFlag[""+areaId].flag) {
+		return false;
+	};
+	
+	if (!!req) {
+		req.abort();
+		req=null
+	};
+	showLoading();
+
+	req=$.ajax({
+	  type: 'GET',
+	  url: serverAddress+'/utvgoClient/interfaces/getRadio_list.action?pageNo=1&pageSize=1000&areaId='+areaId,
+	  // data to be added to query string:
+	  //data: {},
+	  // type of data we are expecting in return:
+	  dataType: 'json',
+	  success: function(data){
+	  	if (data.status==0) {
+	  		var _data=data.result;
+	  		var s='';
+	  		var item;
+		    for(var i=0,len=_data.length;i<len;i++){
+		    	item=_data[i];			    	
+		    		s+='<div class="zb-item"> <div  class="zb-item-link clearfix"> <div data-href="./gb_listShow.html?contentId='+item.id+'&fetchRadioId='+item.fetchRadioId+'"  class="zb-item-logo" style=""></div> <div class="zb-item-text"> <p class="zb-item-now ellipsis">'+item.radioName+'</p> <p class="zb-item-next ellipsis">正在播出：'+item.showName+'</p> </div> <!--<div class="zb-item-icon"></div>--> </div> </div>'; 
+		    	}
+		    if(_data.length<=0){
+		    	s+='<div class="noDtataTips">暂无数据</div>';
+		    }
+		    $el.html(s);
+		    if (!!fun) {
+		    	fun();
+		    };
+	  	};
+	  	hideLoading();
+	  	dataFlag[""+areaId]={};
+	  	dataFlag[""+areaId].flag=true;
+	  },
+	  error: function(xhr, type){
+	    //alert('network error!');
+	    //hideLoading();
+	  }
+
+	});
+}
+function initSwiper(_mainId){
+	var Swiper1 = new Swiper('#swiper-container1',{
+        paginationClickable: !0,
+        slidesPerView: "auto",
+        freeMode: !0 , 
+        initialSlide : _mainId  
+		// ,onTouchStart: function(swiper, even){
+		//  	$(".listType-item.on").removeClass("on");
+		//  	$(".listType-item").eq(Swiper1.activeIndex).addClass("on");	
+		//  	Swiper2.swipeTo(Swiper1.activeIndex,1000,false);			
+		//      console.log(swiper);
+		//     }
+		
+	});
+	var Swiper2 = new Swiper('#swiper-container2',{
+        paginationClickable: !0,
+        initialSlide: _mainId,
+        //slidesPerView: "auto",
+        //freeMode: !0 ,  
+		onSlideChangeEnd: function(swiper, even){
+		 	$(".listType-item.on").removeClass("on");
+		 	$(".listType-item").eq(Swiper2.activeIndex).addClass("on");
+		 	Swiper1.swipeTo(Swiper2.activeIndex,200,false);	
+		 	loadTVlistByType(swiper.activeIndex);
+		 	mainId=swiper.activeIndex;
+
+	 	},
+	 	onFirstInit : function(swiper,event){
+	 		swiper.activeIndex=_mainId;
+	 	}
+	});
+	// Swiper1.params.control = Swiper2;//需要在Swiper2初始化后，Swiper1控制Swiper2
+	// Swiper2.params.control = Swiper1;//需要在Swiper1初始化后，Swiper2控制Swiper1
+	$(".listType-item").eq(Swiper2.activeIndex).addClass("on");
+
+	$("#swiper-container1").on("tap",".listType-item",function(){
+	 	var _this=$(this);
+	 	var _index=_this.index();
+	 	$(".listType-item.on").removeClass("on");
+	 	_this.addClass("on");
+	 	Swiper2.swipeTo(_index,300,false);
+	 	loadTVlistByType(_index);
+	 	mainId=_index;
+	});	
+	// $("#swiper-container2").on("swipe",function(){
+	//  	var _this=$(this);
+	//  	$(".listType-item.on").removeClass("on");
+	//  	$(".listType-item").eq(Swiper2.activeIndex).addClass("on");
+	// });		
+};
+
+$("#container2Wrapper").on("tap",".zb-item-logo",function(){
+	var _this=$(this);
+	var _parent=_this.parent();
+	var _url=_this.attr("data-href");
+	sessionStorage.setItem('audioArea',mainId);
+	// window.location.hash='?mainId='+mainId+'&subId='+subId;
+	window.location.href=_url;
+	// _parent.siblings().find(".zb-item-logo").removeClass("on");
+	// _this.find(".zb-item-logo").addClass("on");
+})
+.on("tap",".zb-item-icon",function(){
+	var _this=$(this);
+	if (_this.hasClass("on")) {
+		_this.removeClass("on");
+	}else{
+		_this.addClass("on");
+	};
+	
+});
+
+function getTvTypes(back){
+	showLoading();
+	req=$.ajax({
+	  type: 'GET',
+	  url: serverAddress+'/utvgoClient/interfaces/getFilterWords_list.action?channelId=10056',
+	  // data to be added to query string:
+	  data: {},
+	  // type of data we are expecting in return:
+	  dataType: 'json',
+	  success: function(data){
+  		var _data=data.result[0].areas||[];
+	  	if (data.status==0) {};
+	  	if (!!back) {
+	  		back(_data);
+	  	};
+	  },
+	  error: function(xhr, type){
+	    //alert('network error!');
+	  }
+	});
+
+}
+function initTypesList(typeArr,back){
+	var _typeArr=typeArr;
+	var typeStr="";
+	var listStr="";
+	for (var j = 0,_typeLen=typeArr.length; j < _typeLen; j++) {
+		if(!!!_typeArr[j].name){
+			continue;
+		}
+		typeStr=typeStr+'<li class="listType-item swiper-slide " data-id="'+_typeArr[j].id+'"><span>'+ (_typeArr[j].name||"--")+'</span><!--<i></i> --></li>'; 
+		if (_typeArr[j].id) {
+	    	listStr+='<li id="" class="indexContentBox swiper-slide overflow-scroll-y"></li>';
+	    }
+	};
+	$("#typeList").html(typeStr);
+    $('#container2Wrapper').html(listStr);
+    initSwiper(mainId);
+	hideLoading();	
+    if (!!back) {
+    	back();
+    };
+}
+

@@ -233,6 +233,10 @@ function getNewData(action){
 function renderListData(data,action){
 	var s='';
 	var data=data||[];
+	if(!!!action||action=='new'){}else{
+		var w=$('.rmdy-item-link').width();
+		var h=w/(210/280);
+	}
 	for(var i= 0,len=data.length;i<len;i++){
 		if(data[i].tvgoImg.indexOf('http://')==-1){
 			data[i].tvgoImg=imgBasePath+data[i].tvgoImg;
@@ -244,14 +248,19 @@ function renderListData(data,action){
 		}
 		if(data[i].mediaNum>1&&data[i].utvgotvsupplierid<=0){
 			//期模式,去期列表
-			s+='<div class="rmdy-item"><a href="list_set.html?qdId='+data[i].id+'&qdName='+data[i].contentName+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
+			s+='<div class="rmdy-item"><a href="list_set.html?qdId='+data[i].id+'&qdName='+data[i].contentName+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" style="height:'+h+'px;" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
 		}else{
-			s+='<div class="rmdy-item"><a href="dyDetail.html?channelId='+channelId+'&contentId='+data[i].id+'&type='+(dyOrDsjType||'dy')+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
+			s+='<div class="rmdy-item"><a href="dyDetail.html?channelId='+channelId+'&contentId='+data[i].id+'&type='+(dyOrDsjType||'dy')+'" class="rmdy-item-link"><img src="'+data[i].tvgoImg+'" style="height:'+h+'px;" /><p class="rdzx-text ellipsis">'+(data[i].contentName)+'</p></a></div>';
 		}
 	}
 
 	if(!!!action||action=='new'){
 		$('#listContentBox').html(s);
+		setTimeout(function(){
+			var w=$('.rmdy-item-link').width();
+			var h=w/(210/280);
+			$('.rmdy-item-link img').height(h);
+		},0);
 	}else{
 		$('#listContentBox').append(s);
 	}

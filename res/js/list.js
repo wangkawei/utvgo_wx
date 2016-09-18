@@ -173,15 +173,24 @@ function getNewData(action){
 function renderListData(data,action){
 	var s='';
 	var data=data||[];
+	if(!!!action||action=='new'){}else{
+		var w=$('.rdzx-item-link').width();
+		var h=w/(210/158);
+	}
 	for(var i= 0,len=data.length;i<len;i++){
 		if(data[i].tvgoImg.indexOf('http://')==-1){
 			data[i].tvgoImg=imgBasePath+data[i].tvgoImg;
 		}
-		s+='<div class="rdzx-item"> <a href="list_set.html?qdId='+data[i].id+'&qdName='+encodeURIComponent(data[i].contentName)+'" class="rdzx-item-link"><img src="'+data[i].tvgoImg+'" /> <p class="rdzx-text">'+data[i].contentName+'</p></a> </div>';
+		s+='<div class="rdzx-item"> <a href="list_set.html?qdId='+data[i].id+'&qdName='+encodeURIComponent(data[i].contentName)+'" class="rdzx-item-link"><img src="'+data[i].tvgoImg+'" style="height:'+h+'px;" /> <p class="rdzx-text">'+data[i].contentName+'</p></a> </div>';
 	}
 
 	if(!!!action||action=='new'){
 		$('#listContentBox').html(s);
+		setTimeout(function(){
+			var w=$('.rdzx-item-link').width();
+			var h=w/(210/158);
+			$('.rdzx-item-link img').height(h);
+		},0);
 	}else{
 		$('#listContentBox').append(s);
 	}
