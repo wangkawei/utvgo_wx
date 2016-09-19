@@ -164,7 +164,7 @@
 		var contentBox=data.snet_ContentBox;
 		var pm=data.pm||{};
 		//./play_sn.html?playName='+encodeURIComponent(data[i].recommendContentName||data[i].contentName)+'&playUrl='+encodeURIComponent(data[i].playUrl||data[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(data[i].tvgoImg)+'&contentId='+encodeURIComponent(data[i].contentId)+'&col='+(data[i].mediaNumber>1 ? 3 : 3)+'&type='+encodeURIComponent('qi')+'&mediaNumber='+encodeURIComponent(data[i].mediaNumber)
-		s='<a href="./play_sn.html?playName='+encodeURIComponent(contentBox.recommendContentName||contentBox.contentName)+'&playUrl='+(contentBox.playUrl||contentBox.tvgoPlayurl||pm.records[0].playUrl||pm.records[0].tvgoPlayurl)+'&playImg='+encodeURIComponent(contentBox.tvgoImg)+'&currentIndex=0&boxId='+contentId+'&channelId='+contentBox.channelId+'&contentId='+encodeURIComponent(contentBox.contentId)+'&col='+(pm.records.length>0 ? 3 : 2)+'&type='+(pm.records.length>0 ? 'ji' : 'dy')+'&mediaNumber='+encodeURIComponent(pm.records.length)+'" class="sourceItem">'+'立即播放'+'</a>';
+		s='<a href="./play_sn.html?playName='+encodeURIComponent(contentBox.recommendContentName||contentBox.contentName)+'&playUrl='+(contentBox.playUrl||contentBox.tvgoPlayurl||pm.records[0].playUrl||pm.records[0].tvgoPlayurl)+'&playImg='+encodeURIComponent(contentBox.tvgoImg)+'&currentIndex=0&boxId='+contentId+'&channelId='+contentBox.channelId+'&contentId='+encodeURIComponent(contentBox.contentId)+'&col='+((pm.records.length>0&&data.snet_ContentBox.utvgotvsupplierid>0) ? 3 : 2)+'&type='+((pm.records.length>0&&data.snet_ContentBox.utvgotvsupplierid>0) ? 'ji' : 'dy')+'&mediaNumber='+encodeURIComponent(pm.records.length)+'" class="sourceItem">'+'立即播放'+'</a>';
 
 
 		var ss='<div style="padding-bottom: 10px;"><!--播放来源:--></div> <div class="clearfix"> '+s+' </div>';
@@ -173,7 +173,7 @@
 	function renderDetailTab(data){
 
 		var contentBox=data.snet_ContentBox;
-		if(data.pm&&data.pm.records&&data.pm.records.length>0){
+		if(data.pm&&data.pm.records&&data.pm.records.length>0&&contentBox.utvgotvsupplierid>0){
 			type='dsj';
 		}
 		var col=2;
@@ -283,10 +283,12 @@
 		}
 		$('.dyDetail-likeListBox').html(s);
 		setTimeout(function(){
-			var w=$('.rmdy-item-link').width();
-			if(!!!w){
-				return;
-			}
+			// var w=$('.rmdy-item-link').width();
+			// if(!!!w){
+			// 	return;
+			// }
+			var w=$('body').width();
+			w=(w-(11*4))/3;
 			var h=w/(210/280);
 			$('.rmdy-item-link img').height(h);
 		},0);

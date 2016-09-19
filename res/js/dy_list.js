@@ -234,7 +234,9 @@ function renderListData(data,action){
 	var s='';
 	var data=data||[];
 	if(!!!action||action=='new'){}else{
-		var w=$('.rmdy-item-link').width();
+		//var w=$('.rmdy-item-link').width();
+		var w=$('body').width();
+		w=(w-(11*4))/3;
 		var h=w/(210/280);
 	}
 	for(var i= 0,len=data.length;i<len;i++){
@@ -257,7 +259,9 @@ function renderListData(data,action){
 	if(!!!action||action=='new'){
 		$('#listContentBox').html(s);
 		setTimeout(function(){
-			var w=$('.rmdy-item-link').width();
+			//var w=$('.rmdy-item-link').width();
+			var w=$('body').width();
+			w=(w-(11*4))/3;
 			var h=w/(210/280);
 			$('.rmdy-item-link img').height(h);
 		},0);

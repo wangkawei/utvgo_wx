@@ -116,13 +116,17 @@
 				continue;
 			}
 			href='./play_sn.html?playName='+encodeURIComponent(items[i].contentName)+'&playUrl='+encodeURIComponent(items[i].playUrl||items[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(items[i].tvgoImg)+'&currentIndex=0&boxId='+items[i].id+'&channelId='+items[i].channelId+'&contentId='+encodeURIComponent(items[i].contentId)+'&col='+(items[i].mediaNum>1? 3:2)+'&type='+encodeURIComponent(type)+'&mediaNumber='+encodeURIComponent(items[i].mediaNum);//为电影 模式所用
-
-			s+='<div class="rdzx-item"> <a data-boxid="'+items[i].id+'" data-href="'+href+'" class="rdzx-item-link"><img src="'+items[i].tvgoImg+'" /> <p class="rdzx-text">'+items[i].contentName+'</p></a> </div>';
+			if(type=='qi'){
+				s+='<div class="rdzx-item"> <a data-boxid="'+items[i].id+'" data-href="'+href+'" class="rdzx-item-link"><img src="'+items[i].tvgoImg+'" /> <p class="rdzx-text">'+items[i].contentName+'</p></a> </div>';
+			}else{
+				//rmdy
+				s+='<div class="rmdy-item"> <a data-boxid="'+items[i].id+'" data-href="'+href+'" class="rmdy-item-link"><img src="'+items[i].tvgoImg+'" /> <p class="rdzx-text ellipsis">'+items[i].contentName+'</p></a> </div>';
+			}
 		}
 
 		$('#likeListBox').html(s);
 
-		$('#likeListBox .rdzx-item-link').on('tap',function(e){
+		$('#likeListBox .'+(type=='qi'?'rdzx':'rmdy')+'-item-link').on('tap',function(e){
 			//alert($(this).attr('data-href'));
 			
 			$('.video-play-play-icon').hide();
@@ -133,8 +137,10 @@
 			}else if(duojiType=='qi'){
 				getDetailNew($(this).attr('data-boxid'));
 			}else{
+				getDetailNew($(this).attr('data-boxid'));
 				//电影模式
-				window.location.replace($(this).attr('data-href'));
+				//window.location.replace($(this).attr('data-href'));
+
 				/*var i=$(this).parent().index();
 				//alert(i);
 				urlParaInit($(this).attr('data-href'));
@@ -147,10 +153,12 @@
 		});
 		if(type!='qi'){
 			setTimeout(function(){
-				var w=$('.rdzx-item-link').width();
-				if(!!!w){return;}
+				//var w=$('.rmdy-item-link').width();
+				//if(!!!w){return;}
+				var w=$('body').width();
+				w=(w-(11*4))/3;
 				var h=w/(210/280);
-				$('.rdzx-item-link img').height(h);
+				$('.rmdy-item-link img').height(h);
 			},0);
 		}else{
 			setTimeout(function(){
@@ -161,13 +169,17 @@
 			},0);
 		}
 	}
+	var getDetailNewReq=null;
 	function getDetailNew(boxId){
 		var href='';
-		
+		if(getDetailNewReq){
+			getDetailNewReq.abort();
+			getDetailNewReq=null;
+		}
 		//http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxDetail.action?channelId=10085&boxId=9287&zoneId=17&pagesize=1000
 		var url=serverAddress+'/utvgoClient/tvutvgo/channel/ajaxDetail.action';
 		showLoading();
-		$.ajax({
+		getDetailNewReq=$.ajax({
 		  type: 'GET',
 		  url: url,
 		  // data to be added to query string:
@@ -175,8 +187,9 @@
 		  // type of data we are expecting in return:
 		  dataType: 'json',
 		  success: function(data){
+		  	getDetailNewReq=null;
 		  	hideLoading();
-		  	if(data.pm.records.length>0){
+		  	if(type!='dy'&&data.pm.records.length>0){
 		  		//电视剧 或 期
 		  		var item=data.pm.records[0];
 		  		if(item.tvgoImg.indexOf('http://')==-1){
@@ -203,6 +216,7 @@
 		  },
 		  error: function(xhr, type){
 		    //alert('network error!');
+		    getDetailNewReq=null;
 		  }
 		});
 	}
@@ -249,9 +263,9 @@
 				dataType:'json',
 				success:function(data){
 					hideLoading();
-					if(data.pm.records.length>0){
+					if(data.pm.records.length>0&&type=='ji'){
 						renderDuojiList(data.pm.records||[]);
-						currentIndex=0;
+						//currentIndex=0;
 						$('.detail-jiList-item').eq(currentIndex).trigger('tap');
 					}
 				},
@@ -381,7 +395,7 @@
 		s+='<div class="detailTabBar col'+col+' clearfix">';
 		
 		if(col==3){
-			s+='<div class="detailTabItem on"> <span class="detailTab-text">选集</span> </div>';
+			s+='<div class="detailTabItem on"> <span class="detailTab-text">'+(type=='qi'?'播放列表':'选集')+'</span> </div>';
 		};
 		
 		s+='<div class="detailTabItem"> <span class="detailTab-text">猜你喜欢</span> </div> <div class="detailTabItem"> <span class="detailTab-text">简介</span> </div>';
