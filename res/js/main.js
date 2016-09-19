@@ -16,7 +16,7 @@ var userId='';
 if(!!account&&!!accountObj){
 	userId=accountObj.userId||'1517';
 }else{
-	userId=1517;
+	//userId=1517;
 }
 //userId=1517;//用户帐号 用于测试
 
@@ -217,12 +217,13 @@ function hideLoading(){
 
 	$('#topNavSearchBt').tap(function(e){
 		//alert('search');
-    if(parseInt(channelId,10)==2||parseInt(channelId,10)==3){
-      
-    }else{
-      channelId=0;
-    }
-    location.href='./site_search.html?channelId='+(channelId||0);
+	    // if(parseInt(channelId,10)==2||parseInt(channelId,10)==3){
+	      
+	    // }else{
+	    //   channelId=0;
+	    // }
+
+	    location.href='./search.html?channelId=-1';
 	});
 
 	$('#main').on('touchstart',function(e){
@@ -239,12 +240,20 @@ function hideLoading(){
 	$('#searchInput').tap(function(e){
 		//alert('input');
     
-    location.href='./site_search.html?channelId=0';
+    	location.href='./search.html?channelId=-1';
 	});
 
 })();
 
-
+function isLogin(){
+	var account=localStorage.getItem('account');
+	var accountObj=JSON.parse(account);
+	if(!!account&&!!accountObj&&!!accountObj.userName){
+		return true;
+	}else{
+		return false;
+	}
+}
 
 /**detail tab**/
 function detailTabInitShow(){
@@ -268,7 +277,7 @@ function detailTabInitShow(){
 
 ;(function() {
 	wx.config({
-		debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 		//appId: 'wx92d82a6e0fd6ff09', // 必填，公众号的唯一标识
 		timestamp: '1459303663', // 必填，生成签名的时间戳
 		nonceStr: 'pYvCP2V0sUQLtXTM', // 必填，生成签名的随机串

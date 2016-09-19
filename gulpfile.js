@@ -134,7 +134,7 @@ gulp.task('js-own',function(){
 		//.pipe(concat('all.js'))
 		//.pipe(gulp.dest('./dest/res/js'))
 		//.pipe(rename({suffix:'.min'}))
-		//.pipe(uglify())
+		.pipe(uglify())
 		.pipe(gulp.dest('./dest/res/js'))
 		.pipe(rev())
 		.pipe(rev.manifest())

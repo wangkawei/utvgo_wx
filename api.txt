@@ -218,3 +218,7 @@ http://27.36.116.72/utvgoClient/tvutvgo/channel/ajaxList.action?channelId=10086&
 
 
 http://192.168.4.55:8080/utvgoClient/tvutvgo/channel/ajaxList.action?channelId=10085&pagesize=10&pager.offset=1&typeId=0&year=2016&areaId=0
+
+
+线上部署：
+http://27.36.116.72/utvgo_wx/dest/index.html

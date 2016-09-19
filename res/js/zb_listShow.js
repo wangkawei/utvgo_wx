@@ -15,11 +15,24 @@ $(document).ready(function(){
     //$("#videoView").attr("src",playUrl);
     document.getElementById('videoView').src=playUrl+liveAuth;
 });
-
+var limitTimer=null
+function startLimitTime(){
+    if(limitTimer){
+        return;
+    }
+    if(!isLogin()){
+        limitTimer=setTimeout(function(){
+            clearTimeout(limitTimer);
+            limitTimer=null;
+            alert('直播体验时间到，请先登录享受无限时观看！');
+            history.back();
+        },1000*60*10);
+    }
+}
 function getTvShowList(){
     $.ajax({
         type: 'GET',
-        url: serverAddress+'/utvgoClient/interfaces/tvShow_listTvShow.action?tvId='+urlParaObj.contentId+'&userId=',
+        url: serverAddress+'/utvgoClient/interfaces/tvShow_listTvShow.action?tvId='+urlParaObj.contentId+'&userId='+userId,
         // data to be added to query string:
         data: {},
         // type of data we are expecting in return:
@@ -92,7 +105,7 @@ function renderTVShow(dataArr){
 function getBackShowsList(){
     $.ajax({
         type: 'GET',
-        url: serverAddress+'/utvgoClient/interfaces/tvShow_listPlayBackTvShow.action?tvId='+contentId+'&userId=',
+        url: serverAddress+'/utvgoClient/interfaces/tvShow_listPlayBackTvShow.action?tvId='+contentId+'&userId='+userId,
         // data to be added to query string:
         data: {},
         // type of data we are expecting in return:
@@ -173,6 +186,7 @@ $(document).on("tap",".detailTabItem ",function(){
         $('.video-play-play-icon').hide();
         $('.video-play-img').hide();
         document.getElementById('videoView').play();
+        startLimitTime();
         islive=true;
     })
     .on("tap","#detailTabContentBox_1 .listItem",function(){
@@ -188,6 +202,7 @@ $(document).on("tap",".detailTabItem ",function(){
         $('.video-play-play-icon').hide();
         $('.video-play-img').hide();
         document.getElementById('videoView').play();
+        startLimitTime();
         islive=false;
     });
 
@@ -195,6 +210,7 @@ $('.video-play-wrapper').one('tap',function(e){
     $('.video-play-play-icon').hide();
     $('.video-play-img').hide();
     document.getElementById('videoView').play();
+    startLimitTime();
     islive=true;
 });
 

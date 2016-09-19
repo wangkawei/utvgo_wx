@@ -42,14 +42,17 @@
 		}
 	}
 	//添加播放记录到本地
-	function addRecord(playUrl,playName,playImg,contentId){
+	function addRecord(playUrl,playName,playImg,contentId,boxId,type,mediaNumber,channelId){
 		var o={
 			contentId:contentId,
-			name:playName,
+			contentName:playName,
 			remark:playName,
 			playUrl:playUrl,
-			mediaNumber:1,
-			img:playImg
+			mediaNum:mediaNumber||1,
+			tvgoImg:playImg,
+			type:type,
+			boxId:boxId,
+			channelId:channelId
 		};
 		var rl=localStorage.getItem('recordList')||'';
 		if(!rl){
@@ -145,12 +148,14 @@
 		if(type!='qi'){
 			setTimeout(function(){
 				var w=$('.rdzx-item-link').width();
+				if(!!!w){return;}
 				var h=w/(210/280);
 				$('.rdzx-item-link img').height(h);
 			},0);
 		}else{
 			setTimeout(function(){
 				var w=$('.rdzx-item-link').width();
+				if(!!!w){return;}
 				var h=w/(210/158);
 				$('.rdzx-item-link img').height(h);
 			},0);
@@ -432,7 +437,7 @@
 		$('.video-play-play-icon').hide();
 		$('.video-play-img').hide();
 		document.getElementById('videoView').play();
-		addRecord(playUrl,playName,playImg,contentId);
+		addRecord(playUrl,playName,playImg,contentId,boxId,type,mediaNumber,channelId);
 	});
 	$('.video-top-bar-back').on('tap',function(e){
 		//alert('t');

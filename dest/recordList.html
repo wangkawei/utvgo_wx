@@ -30,7 +30,7 @@
     <title>播放记录</title>
     <link rel="stylesheet" href="./res/css/base.css?v=f64bdde28d" />
     <link rel="stylesheet" href="./res/css/idangerous.swiper.css?v=a769a5281c" />
-    <link rel="stylesheet" href="./res/css/main.css?v=26685463a8" />
+    <link rel="stylesheet" href="./res/css/main.css?v=43d28b7f9d" />
     <style type="text/css">
 
     </style>
@@ -74,7 +74,7 @@
 	<script type="text/javascript" src="./res/js/lib/idangerous.swiper.js?v=e61af1cb6a"></script>
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
-	<script type="text/javascript" src="./res/js/main.js?v=dd375a4399"></script>
+	<script type="text/javascript" src="./res/js/main.js?v=af899f604b"></script>
 	<script type="text/javascript">
 
 		hideLoading();
@@ -83,17 +83,17 @@
 			rl=JSON.parse(rl);
 			renderList(rl);
 		}else{
-			$('#listContentBox').html('<div style="text-align:center;padding:20px;">无记录</div>');
+			$('#listContentBox').html('<div style="text-align:center;padding:20px;color:#fff;">无记录</div>');
 		}
 
 		function renderList(data){
 			var s='';
 			var data=data||[];
 			for(var i= 0,len=data.length;i<len;i++){
-				s+='<div class="commonList-item"> <a data-remark="'+data[i].remark+'" data-href="./play_sn.html?playName='+encodeURIComponent(data[i].name)+'&playUrl='+encodeURIComponent(data[i].playUrl)+'&playImg='+encodeURIComponent(data[i].img)+'&contentId='+encodeURIComponent(data[i].contentId)+'&col='+(data[i].mediaNumber>1 ? 3 : 3)+'&type='+encodeURIComponent('qd')+'&mediaNumber='+encodeURIComponent(data[i].mediaNumber)+'" class="commonList-item-link clearfix"> <div class="commonList-item-img"> <img src="'+data[i].img+'" /> </div> <div class="commonList-item-text-wrapper"> <p class="commonList-item-text">'+data[i].name+'</p> <span class="commonList-item-type-text">'+'</span> </div> </a> </div>';
+				s+='<div class="commonList-item"> <a data-remark="'+data[i].remark+'" data-href="./play_sn.html?playName='+encodeURIComponent(data[i].contentName)+'&playUrl='+encodeURIComponent(data[i].playUrl||data[i].tvgoPlayurl)+'&playImg='+encodeURIComponent(data[i].tvgoImg)+'&currentIndex=0&boxId='+data[i].contentId+'&channelId='+data[i].channelId+'&contentId='+encodeURIComponent(data[i].contentId)+'&col='+(data[i].mediaNum>1 ? 3 : 2)+'&type='+encodeURIComponent('dy')+'&mediaNumber='+encodeURIComponent(data[i].mediaNum)+'" class="commonList-item-link clearfix"> <div class="commonList-item-img"> <img src="'+data[i].tvgoImg+'" /> </div> <div class="commonList-item-text-wrapper"> <p class="commonList-item-text">'+data[i].contentName+'</p> <span class="commonList-item-type-text">'+'</span> </div> </a> </div>';
 			}
 			if(data.length<=0){
-				$('#listContentBox').html('<div style="text-align:center;padding:20px;">无记录</div>');
+				$('#listContentBox').html('<div style="text-align:center;padding:20px;color:#fff;">无记录</div>');
 				return;
 			}
 			$('#listContentBox').html(s);

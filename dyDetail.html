@@ -284,6 +284,9 @@
 		$('.dyDetail-likeListBox').html(s);
 		setTimeout(function(){
 			var w=$('.rmdy-item-link').width();
+			if(!!!w){
+				return;
+			}
 			var h=w/(210/280);
 			$('.rmdy-item-link img').height(h);
 		},0);

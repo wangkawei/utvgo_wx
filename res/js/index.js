@@ -42,18 +42,35 @@ $.ajax({
     hideLoading();
     renderTVs(data);
     renderDy(data);
-    renderYyzq(data);
+    renderJJ(data);
+    renderDm(data);
+    //renderYyzq(data);
   },
   error: function(xhr, type){
     //alert('network error!');
   }
 });
+function hasDetailPage(channelId){
+  var channelIds=[10085,10086];
+  for(var i=0,len=channelIds.length;i<len;i++){
+    if(channelId==channelIds[i]){
+      return true;
+    }
+  }
+  return false;
+}
 
 function renderTopBanner(data){
-	var s='';
+	var s='';var href='';
 	var items=data.result.headPics;
     for(var i=0,len=items.length;i<len;i++){
-    	s+='<li class="swiper-slide"> <a href="./dyDetail.html?type='+items[i].extra.type+'&contentId='+items[i].extra.id+'"><img src="'+items[i].bigImg+'" /></a> </li>';
+      if(hasDetailPage(items[i].extra.channelId)){
+        href='./dyDetail.html?channelId='+items[i].extra.channelId+'&contentId='+items[i].extra.id+'&type='+(items[i].extra.channelId==10086 ? 'dsj':'dy');
+      }else{
+        href='list_set.html?qdId='+items[i].extra.id+'&qdName='+items[i].extra.name;
+      }
+      
+    	s+='<li class="swiper-slide"> <a href="'+href+'"><img src="'+items[i].bigImg+'" /></a> </li>';
 
     }
     $('#scrollerIndexTopBanner').append(s);
@@ -61,10 +78,11 @@ function renderTopBanner(data){
 	initTopBanner();
 }
 function renderHots(data){
-	var s='';
+	var s='';var href='';
 	var items=data.result.hots;
     for(var i=0,len=items.length;i<len;i++){
-    	s+='<div class="rdzx-item"> <a href="./play_sn.html?playName='+encodeURIComponent(items[i].extra.name)+'&playUrl='+encodeURIComponent(items[i].extra.playUrl)+'&playImg='+encodeURIComponent(items[i].extra.img)+'&contentId='+encodeURIComponent(items[i].extra.contentId)+'&col=2&type='+encodeURIComponent(items[i].type)+'&mediaNumber='+encodeURIComponent(items[i].extra.mediaNumber)+'" class="rdzx-item-link"><img src="'+items[i].bigImg+'" /> <p class="rdzx-text">'+items[i].name+'</p></a> </div>';
+      href='list_set.html?qdId='+items[i].extra.id+'&qdName='+items[i].extra.name;
+    	s+='<div class="rdzx-item"> <a href="'+href+'" class="rdzx-item-link"><img src="'+items[i].bigImg+'" /> <p class="rdzx-text">'+items[i].name+'</p></a> </div>';
     }
     $('#rdzxContent').append(s);
 }
@@ -79,14 +97,39 @@ function renderTVs(data){
 	
 }
 function renderDy(data){
-	var s='';
+	var s='';var href='';
 	var items=data.result.ys;
     for(var i=0,len=items.length;i<len;i++){
-    	s+='<div class="rmdy-item"> <a href="./dyDetail.html?type=dy&contentId='+items[i].extra.id+'" class="rmdy-item-link"><img src="'+items[i].extra.img+'" /> <p class="rdzx-text ellipsis">'+items[i].extra.name+'</p></a> </div>';
+      href='./dyDetail.html?channelId='+items[i].extra.channelId+'&contentId='+items[i].extra.id+'&type='+(items[i].extra.channelId==10086 ? 'dsj':'dy');
+    	s+='<div class="rmdy-item"> <a href="'+href+'" class="rmdy-item-link"><img src="'+items[i].bigImg+'" /> <p class="rdzx-text ellipsis">'+items[i].extra.name+'</p></a> </div>';
     }
     $('#rmdyContent').append(s);
 
 }
+
+function renderJJ(data){
+  var s='';var href='';
+  var items=data.result.zqs;
+    for(var i=0,len=items.length;i<len;i++){
+      href='./dyDetail.html?channelId='+items[i].extra.channelId+'&contentId='+items[i].extra.id+'&type='+(items[i].extra.channelId==10086 ? 'dsj':'dy');
+      s+='<div class="rmdy-item"> <a href="'+href+'" class="rmdy-item-link"><img src="'+items[i].bigImg+'" /> <p class="rdzx-text ellipsis">'+items[i].extra.name+'</p></a> </div>';
+    }
+    $('#jjtjContent').append(s);
+
+}
+
+function renderDm(data){
+  var s='';var href='';
+  var items=data.result.dm;
+    for(var i=0,len=items.length;i<len;i++){
+      href='list_set.html?qdId='+items[i].extra.id+'&qdName='+items[i].extra.name;
+      //s+='<div class="rmdy-item"> <a href="'+href+'" class="rmdy-item-link"><img src="'+items[i].bigImg+'" /> <p class="rdzx-text ellipsis">'+items[i].extra.name+'</p></a> </div>';
+      s+='<div class="rdzx-item"> <a href="'+href+'" class="rdzx-item-link"><img src="'+items[i].bigImg+'" /> <p class="rdzx-text">'+items[i].name+'</p></a> </div>';
+    }
+    $('#rmdmContent').append(s);
+
+}
+
 function renderYyzq(data){
 	var s='';
 	var items=data.result.spList;
