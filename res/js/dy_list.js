@@ -6,7 +6,7 @@ $('.list-page-main').on('scroll',function(e){
 	//$('.topNav-title').html($(this).scrollTop()+'||'+$('#listContent').height()+'||'+contentH);
 
 	//即将滚到顶部了
-	if(top<=136){
+	if(top<=102){
 		//显示相对定位 类型，隐藏已选类型,隐藏固定定位
 		$('.listTypeBox').show();
 		$('.listTypeBox.fixed').hide();
@@ -53,7 +53,7 @@ yearId=0;
 pageSize=10;
 var typeName='全部类型',areaName='全部地区',yearName='全部年份';
 var dyOrDsjType='dy';//dy or dsj(dm)
-
+areaName='';
 if(parseInt(channelId,10)==10086){//3
 	$('.topNav-title').html('电视剧');
 }
@@ -107,7 +107,7 @@ function renderTypeData(data){
 	s+='</div></div>';
 
 	//area
-	s+='<div id="listType-area" class="listType-row listType-area swiper-container"><div class="swiper-wrapper">';
+	/*s+='<div id="listType-area" class="listType-row listType-area swiper-container"><div class="swiper-wrapper">';
 	items=data.result.areaList||[];
 	i=0;
 	len=items.length;
@@ -121,7 +121,7 @@ function renderTypeData(data){
 		}
 		s+='<div class="swiper-slide listType-item '+on+'" data-id="'+items[i].areaId+'"><div class="listType-item-text">'+text+'</div></div>';
 	}
-	s+='</div></div>';
+	s+='</div></div>';*/
 
 
 	//year
@@ -144,7 +144,7 @@ function renderTypeData(data){
 	$('#listTypeBox').html(s);
 
 	s= s.replace('id="listType-type"','id="listType-type-fixed"');
-	s= s.replace('id="listType-area"','id="listType-area-fixed"');
+	//s= s.replace('id="listType-area"','id="listType-area-fixed"');
 	s= s.replace('id="listType-year"','id="listType-year-fixed"');
 	$('#listTypeBoxFixed').html(s);
 
@@ -164,7 +164,7 @@ function initListTypeEvent(){
 		getNewData('new');
 		setListTypeSelectedBox();
 	});
-	$('.listType-area .listType-item').on('tap',function(e){
+	/*$('.listType-area .listType-item').on('tap',function(e){
 		areaId=$(this).attr('data-id');
 		areaName=$(this).children().html();
 		$('.listType-area .listType-item.on').removeClass('on');
@@ -174,7 +174,7 @@ function initListTypeEvent(){
 		try{ajaxMore.abort();}catch(err){}
 		getNewData('new');
 		setListTypeSelectedBox();
-	});
+	});*/
 	$('.listType-year .listType-item').on('tap',function(e){
 		yearId=$(this).attr('data-id');
 		yearName=$(this).children().html();
@@ -290,7 +290,7 @@ function updateListTypeFixedSwiper(){
 	// listTypeYear.reInit();
 
 	listTypeTypeFixed.reInit();
-	listTypeAreaFixed.reInit();
+	//listTypeAreaFixed.reInit();
 	listTypeYearFixed.reInit();
 }
 var listTypeType,listTypeArea,listTypeYear,listTypeTypeFixed,listTypeAreaFixed,listTypeYearFixed;
@@ -342,7 +342,7 @@ function initListTypeSwiper() {
 		//onSlideChangeEnd:bannerPageChangeTips
 	});
 
-	listTypeAreaFixed = new Swiper('#listType-area-fixed', {
+	/*listTypeAreaFixed = new Swiper('#listType-area-fixed', {
 		//pagination: '#slideTopBannerIndicator',
 		paginationClickable: true,
 		//slidesPerView: 1,
@@ -352,7 +352,7 @@ function initListTypeSwiper() {
 		//autoplay:8000,
 		//onFirstInit:bannerPageChangeTips,
 		//onSlideChangeEnd:bannerPageChangeTips
-	});
+	});*/
 	listTypeYearFixed = new Swiper('#listType-year-fixed', {
 		//pagination: '#slideTopBannerIndicator',
 		paginationClickable: true,
