@@ -128,15 +128,13 @@
 		<!--banner begin-->
 		<div id="indexTopBannerBox" class="swiper-container">
 			<ul id="scrollerIndexTopBanner" class="swiper-wrapper">
-				<!-- <li class="swiper-slide">
-                    <a href="#"><img src="../res/images/1.jpg" /></a>
-                </li>
-                <li class="swiper-slide">
-                    <a href="#"><img src="../res/images/1.jpg" /></a>
-                </li>
-                <li class="swiper-slide">
-                    <a href="#"><img src="../res/images/1.jpg" /></a>
-                </li> -->
+				<% if(result.headPics.length){ %>
+					<% result.headPics.forEach(function(item){ %>
+						<li class="swiper-slide">
+							<a href="<%= item.href %>"><img src="<%= item.bigImg %>" /></a>
+						</li>
+					<% }) %>
+				<% } %>
 			</ul>
 			<div id="indexTopBannerTextBar" class="ellipsis"></div>
 			<div id="slideTopBannerIndicator" class="dib-wrapper">
@@ -154,17 +152,23 @@
 			<a href="zb_list.html" class="arrow-index"></a>
 		</div>
 		<div id="zbContent" class="indexContentBox">
-			<!-- <div class="zb-item">
-                <a href="#" class="zb-item-link clearfix">
-                    <div class="zb-item-logo" style="background-image:url();"></div>
-                    <div class="zb-item-text">
-                        <p class="zb-item-name ellipsis">佛山电视台</p>
-                        <p class="zb-item-now ellipsis">19:00 转播中央台新闻联播</p>
-                        <p class="zb-item-next ellipsis">财富前途</p>
-                    </div>
-                    <div class="zb-item-icon"></div>
-                </a>
-            </div> -->
+			 <% if(result.tvs.length){ %>
+				<% result.tvs.forEach(function(item){ %>
+					<div class="zb-item">
+						<a href="<%= './zb_listShow.html?playName='+encodeURIComponent(item.extra.tvName)+'&playUrl='+encodeURIComponent(item.extra.playUrl)+'&playImg='+encodeURIComponent('')+'&contentId='+encodeURIComponent(item.extra.id)+'&col=2&type='+encodeURIComponent(item.type) %>" class="zb-item-link clearfix">
+							<div class="zb-item-logo" style="background-image:url(<%= item.extra.img %>);"></div>
+							<div class="zb-item-text">
+								<p class="zb-item-name ellipsis"><%= item.name %></p>
+								<p class="zb-item-now ellipsis"><%= item.extra.showTime+' '+(!!item.extra.showName?item.extra.showName:'暂无节目名称') %></p>
+								<p class="zb-item-next ellipsis"><%= item.extra.nextShowTime+' '+(!!item.extra.nextShowName?item.extra.nextShowName:'暂无节目预告') %></p>
+							</div>
+							<div class="zb-item-icon"></div>
+							<% if(!item.extra.isOpen){ %><div class="zb-nolimitTime-icon"></div><% } %>
+						</a>
+					</div>
+				<%	}) %>
+
+			 <% } %>
 		</div>
 		<!-- 直播 end -->
 
@@ -175,10 +179,14 @@
 			<a href="dy_list.html?channelId=10085" class="arrow-index"></a>
 		</div>
 		<div id="rmdyContent" class="clearfix indexContentBox">
-			<!-- <div class="rmdy-item">
-                <a href="#" class="rmdy-item-link"><img src="./res/images/3.jpg" />
-                <p class="rdzx-text ellipsis">高考确定键三闾</p></a>
-            </div> -->
+			<% if(result.ys.length){ %>
+				<% result.ys.forEach(function(item){ %>
+					<div class="rmdy-item">
+						<a href="<%= './dyDetail.html?channelId='+item.extra.channelId+'&contentId='+item.extra.id+'&type='+(item.extra.channelId==10086 ? 'dsj':'dy') %>" class="rmdy-item-link"><img src="<%= item.bigImg %>" />
+						<p class="rdzx-text ellipsis"><%= item.extra.name %></p></a>
+					</div>
+				<% }) %>
+			<% } %>
 		</div>
 		<!-- 热门电影 end -->
 		<!-- 热门剧集 start -->
@@ -188,10 +196,14 @@
 			<a href="dy_list.html?channelId=10086" class="arrow-index"></a>
 		</div>
 		<div id="jjtjContent" class="clearfix indexContentBox">
-			<!-- <div class="rmdy-item">
-                <a href="#" class="rmdy-item-link"><img src="./res/images/3.jpg" />
-                <p class="rdzx-text ellipsis">高考确定键三闾</p></a>
-            </div> -->
+			<% if(result.zqs.length){ %>
+				<% result.zqs.forEach(function(item){ %>
+					<div class="rmdy-item">
+						<a href="<%= './dyDetail.html?channelId='+item.extra.channelId+'&contentId='+item.extra.id+'&type='+(item.extra.channelId==10086 ? 'dsj':'dy') %>" class="rmdy-item-link"><img src="<%= item.bigImg %>" />
+							<p class="rdzx-text ellipsis"><%= item.extra.name %></p></a>
+					</div>
+				<% }) %>
+			<% } %>
 		</div>
 		<!-- 热门剧集 end -->
 
@@ -202,10 +214,14 @@
 			<a href="list.html?channelId=10087" class="arrow-index"></a>
 		</div>
 		<div id="rmdmContent" class="clearfix indexContentBox">
-			<!-- <div class="rdzx-item">
-                <a href="#" class="rdzx-item-link"><img src="./res/images/2.png" />
-                <p class="rdzx-text">高考确定键三闾大夫代理费李赛凤斯蒂芬酸辣粉的</p></a>
-            </div> -->
+			<% if(result.dm.length){ %>
+				<% result.dm.forEach(function(item){ %>
+					<div class="rdzx-item">
+						<a href="<%= 'list_set.html?qdId='+item.extra.id+'&qdName='+item.extra.name %>" class="rdzx-item-link"><img src="<%= item.bigImg %>" />
+							<p class="rdzx-text ellipsis"><%= item.name %></p></a>
+					</div>
+				<% }) %>
+			<% } %>
 		</div>
 		<!-- 热门动漫 end -->
 
@@ -217,10 +233,14 @@
 			<a href="list.html?channelId=1&channelName=资讯" class="arrow-index"></a>
 		</div>
 		<div id="rdzxContent" class="clearfix indexContentBox">
-			<!-- <div class="rdzx-item">
-                <a href="#" class="rdzx-item-link"><img src="./res/images/2.png" />
-                <p class="rdzx-text">高考确定键三闾大夫代理费李赛凤斯蒂芬酸辣粉的</p></a>
-            </div> -->
+			<% if(result.hots.length){ %>
+				<% result.hots.forEach(function(item){ %>
+					<div class="rdzx-item">
+						<a href="<%= 'list_set.html?qdId='+item.extra.id+'&qdName='+item.extra.name %>" class="rdzx-item-link"><img src="<%= item.bigImg %>" />
+							<p class="rdzx-text ellipsis"><%= item.name %></p></a>
+					</div>
+				<% }) %>
+			<% } %>
 		</div>
 		<!-- 热点资讯 end -->
 
@@ -242,7 +262,7 @@
 
 </div>
 
-<div class="loadingTip"><div class="loadingTipImg"></div></div>
+<div class="loadingTip" style="display:none;"><div class="loadingTipImg"></div></div>
 
 
 <script type="text/javascript" src="./res/js/lib/zepto-1.1.6.js"></script>
@@ -252,7 +272,7 @@
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
 <script type="text/javascript" src="./res/js/main.js"></script>
-<script type="text/javascript" src="./res/js/index.js"></script>
+<script type="text/javascript" src="./res/js/index_server.js"></script>
 <script type="text/javascript">
 
 

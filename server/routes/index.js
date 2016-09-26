@@ -34,9 +34,53 @@ router.get('/', function(req, res, next) {
   //res.status(301).send('跳转中...');
   //重定向
   //res.redirect('/login');
-  res.render('index', { title: '推荐-佛山U生活' });
+  //http://fshk.96956.com.cn/utvgoClient/interfaces/main_index.action
+  http.get({
+    hostname: 'fshk.96956.com.cn',
+    port: 80,
+    path: '/utvgoClient/interfaces/main_index.action',
+    agent: false  // create a new agent just for this one request
+  }, function(response){
+    // Do stuff with response
+    var s='';
+    response.on('data', function(chunk){
+      console.log('receive data:'+chunk);
+      s+=chunk;
+    });
+    response.on('end', function(){
+      //console.log('No more data in response.')
+      //res.send(JSON.stringify(s));
+      var datas=JSON.parse(s);
+      datas.title='推荐 - 佛山U生活';
+      handleTopBanner(datas);
+      res.render('index',datas);
+    });
+  }).on('error',function(e){
+    console.log('problem with request: ${e.message}');
+  });
+
 });
 
+function hasDetailPage(channelId){
+  var channelIds=[10085,10086];
+  for(var i=0,len=channelIds.length;i<len;i++){
+    if(channelId==channelIds[i]){
+      return true;
+    }
+  }
+  return false;
+}
+function handleTopBanner(data){
+  var items=data.result.headPics;
+  for(var i=0,len=items.length;i<len;i++){
+    if(hasDetailPage(items[i].extra.channelId)){
+      items[i].href='./dyDetail.html?channelId='+items[i].extra.channelId+'&contentId='+items[i].extra.id+'&type='+(items[i].extra.channelId==10086 ? 'dsj':'dy');
+    }else{
+      items[i].href='list_set.html?qdId='+items[i].extra.id+'&qdName='+items[i].extra.name;
+    }
+
+  }
+}
 
 
 /*
