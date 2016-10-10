@@ -420,31 +420,54 @@
 
 	}
 
-	
-
-	function init(){
-
-		setVideoTitle(playName);
-		setVideoInfo(playUrl,playImg);
-		if(isDuoji&&duojiType=='ji'){
-			getDuojiList(boxId);
-		}
-		getLikeList();
-		setVideoIntroduce(localStorage.getItem('videoRemark')||playName);
-		try{
-			localStorage.setItem('videoRemark','');
-		}catch(err){}
-		document.getElementById('videoView').addEventListener('ended',function(e){
-			if(isDuoji){
-				playDuojiNext();
+	function getLimitInfo(fn){
+		var url=serverAddress+'/utvgoClient/tvutvgo/tvplay/isCanPlay.action';
+		$.ajax({
+			type:'GET',
+			url:url,
+			data:{playType:'LIVE'},
+			dataType:'json',
+			success:function(data){
+				if(parseInt(data.result,10)!=0){
+					//体验人数已满
+					alert(data.msg);
+					history.back();
+				}else{
+					!!fn&&fn();
+				}
+			},
+			error:function(xhr,type){
+				
 			}
 		});
-		document.getElementById('videoView').addEventListener('error',function(e){
-			alert('视频加载失败!');
+	}
+
+	function init(){
+		//先判断是否到了体验人数
+		getLimitInfo(function(){
+			setVideoTitle(playName);
+			setVideoInfo(playUrl,playImg);
+			if(isDuoji&&duojiType=='ji'){
+				getDuojiList(boxId);
+			}
+			getLikeList();
+			setVideoIntroduce(localStorage.getItem('videoRemark')||playName);
+			try{
+				localStorage.setItem('videoRemark','');
+			}catch(err){}
+			document.getElementById('videoView').addEventListener('ended',function(e){
+				if(isDuoji){
+					playDuojiNext();
+				}
+			});
+			document.getElementById('videoView').addEventListener('error',function(e){
+				alert('视频加载失败!');
+			});
+			if(duojiType=='qi'){
+				getQiList(boxId);
+			}
+
 		});
-		if(duojiType=='qi'){
-			getQiList(boxId);
-		}
 	}
 
 	$('.video-play-wrapper').one('touchstart',function(e){

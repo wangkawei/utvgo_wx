@@ -21,12 +21,14 @@ function startLimitTime(){
         return;
     }
     if(!isLogin()){
-        limitTimer=setTimeout(function(){
+        alert('直播体验时间到，请先登录享受无限时观看！');
+        history.back();
+        /*limitTimer=setTimeout(function(){
             clearTimeout(limitTimer);
             limitTimer=null;
             alert('直播体验时间到，请先登录享受无限时观看！');
             history.back();
-        },1000*60*10);
+        },1000*60*10);*/
     }
 }
 function getTvShowList(){
