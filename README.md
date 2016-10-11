@@ -17,11 +17,24 @@
 
 ### 安装
 首先要装好nodejs，npm，gulp
-打开终端输入
+安装supervisor
 
 ```
-npm install
+npm install supervisor -g
 ```
+
+在项目根目录打开终端，依次输入如下命令
+
+```
+//安装项目需要的依赖包
+npm install
+
+//启动服务(后台启动加 &);服务开启，监听了8082端口
+supervisor server/bin/www
+
+
+```
+
 
 安装package.json里的依赖包
 
@@ -58,3 +71,40 @@ npm install
 
 
 
+### 配置nginx 样例
+```
+server {
+    listen       8888;
+    server_name  localhost;
+
+    #charset koi8-r;
+
+    #access_log  logs/host.access.log  main;
+	root   D:/utvgo_wx/;
+    
+
+    location /dest/index.html {
+        #alias   D:/utvgo_wx/dest/;
+		
+        #index   index.html;
+		#rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
+		proxy_pass http://localhost:8082/index;
+    }
+	
+    location /dest/login.html {
+        #alias   D:/utvgo_wx/dest/;
+		
+        #index   index.html;
+		#rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
+		proxy_pass http://localhost:8082/dest/login.html;
+		proxy_set_header Host $http_host;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+	
+
+    #error_page  404              /404.html;
+
+   
+}
+```
