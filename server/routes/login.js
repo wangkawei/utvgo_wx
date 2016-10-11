@@ -44,8 +44,18 @@ router.get('/', function(req, res, next) {
   //res.redirect('/login');
   //http://fshk.96956.com.cn/utvgoClient/interfaces/main_index.action
   
-  var url='http://fshk.96956.com.cn'+req.originalUrl;//当前网址 //req.connection.remoteAddress; //req.originalUrl
+  
+
+  console.log(req.protocol); //http
+  console.log(req.hostname);//本地nodejs服务的hostname(如有nginx转发过来的，则不是浏览器地址的)
+  //console.log(req.port);//没有这个属性
+  console.log(req.headers);
+  //console.log(req.connection);
+  console.log(req.originalUrl);
+  console.log(req.headers.host);
+  var url=req.protocol+'://'+req.headers.host+req.originalUrl;//当前网址
   console.log('url:'+url);//http://fshk.96956.com.cn/utvgo_wx/dest/index.html
+
   http.get({
     hostname: 'www.96956.com.cn',
     port: 80,

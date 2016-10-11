@@ -28,7 +28,10 @@ app.use(cookieParser());*/
 
 //__dirname 当前代码执行的目录
 //path.resolve(__dirname, '..') 当前目录的上级目录
+//app.use(express.static(path.join(path.resolve(__dirname, '..'), 'dest')));
+
 app.use(express.static(path.join(path.resolve(__dirname, '..'), 'dest')));
+
 
 //session 配置
 /*
@@ -64,7 +67,7 @@ app.use(session({
 });*/
 
 app.use('/index', routes);
-app.use('/login',login);
+app.use('/dest/login.html',login);
 /*app.use('/users', users);*/
 
 

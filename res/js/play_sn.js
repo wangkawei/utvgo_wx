@@ -430,7 +430,7 @@
 			success:function(data){
 				if(parseInt(data.result,10)!=0){
 					//体验人数已满
-					alert(data.msg);
+					alert(data.desc);
 					history.back();
 				}else{
 					!!fn&&fn();
