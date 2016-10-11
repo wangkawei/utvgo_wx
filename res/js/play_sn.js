@@ -428,7 +428,7 @@
 			data:{playType:'LIVE'},
 			dataType:'json',
 			success:function(data){
-				if(parseInt(data.result,10)!=0){
+				if(parseInt(data.status,10)!=0){
 					//体验人数已满
 					alert(data.desc);
 					history.back();

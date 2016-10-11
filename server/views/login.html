@@ -75,8 +75,9 @@
 			timestamp: '<%= timestamp %>', // 必填，生成签名的时间戳
 			nonceStr: '<%= noncestr %>', // 必填，生成签名的随机串
 			signature: '<%= signature %>',// 必填，签名，见附录1
-			jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage','scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+			jsApiList: ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'hideOptionMenu', 'showOptionMenu', 'closeWindow', 'hideMenuItems', 'showMenuItems', 'scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 		});
+		//当前网址：<%= url %>
 	</script>
 	<script type="text/javascript" src="./res/js/main.js"></script>
 

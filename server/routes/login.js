@@ -87,6 +87,7 @@ router.get('/', function(req, res, next) {
       datas.timestamp=timestamp;
       datas.noncestr=noncestr;
       datas.signature=signature;
+      datas.url=url;
       res.render('login',datas);
     });
   }).on('error',function(e){

@@ -67,7 +67,7 @@ app.use(session({
 });*/
 
 app.use('/index', routes);
-app.use('/dest/login.html',login);
+app.use('/utvgo_wx/dest/login.html',login);
 /*app.use('/users', users);*/
 
 
