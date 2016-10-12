@@ -3,6 +3,7 @@ var router = express.Router();
 var http = require('http');
 var Hashes = require('jshashes');//加密库
 
+
 /**路由级中间件，注意顺序*/
 /*router.use(function (req,res,next){
 
@@ -27,35 +28,8 @@ var Hashes = require('jshashes');//加密库
 
 
 
-//#获取accesstoken的接口地址是
-var chengyi_accessToken='http://www.96956.com.cn/mcrapp/accessToken?publishnum=gh_c18d8c5de73b&clientcode=UtvgoCard&clientpwd=32refewf32rfewdss3232fs42edcxilkipoiuytr87';
-
-//#获取jsapi_ticket的接口地址
-var chengyi_jsapi_ticket='http://www.96956.com.cn/mcrapp/jsapiTicket?publishnum=gh_c18d8c5de73b&clientcode=UtvgoCard&clientpwd=32refewf32rfewdss3232fs42edcxilkipoiuytr87';
-
-
-/* GET login page. */
-router.get('/', function(req, res, next) {
-  /*res.setHeader('token', 'xxoo1100');*/
-  //重定向
-  //res.location('/login');
-  //res.status(301).send('跳转中...');
-  //重定向
-  //res.redirect('/login');
-  //http://fshk.96956.com.cn/utvgoClient/interfaces/main_index.action
-  
-  
-
-  console.log(req.protocol); //http
-  console.log(req.hostname);//本地nodejs服务的hostname(如有nginx转发过来的，则不是浏览器地址的)
-  //console.log(req.port);//没有这个属性
-  console.log(req.headers);
-  //console.log(req.connection);
-  console.log(req.originalUrl);
-  console.log(req.headers.host);
-  var url=req.protocol+'://'+req.headers.host+req.originalUrl;//当前网址
-  console.log('url:'+url);//http://fshk.96956.com.cn/utvgo_wx/dest/index.html
-
+router.get('/:url',function(req,res,next){
+  var url=decodeURIComponent(req.params.url);
   http.get({
     hostname: 'www.96956.com.cn',
     port: 80,
@@ -88,7 +62,7 @@ router.get('/', function(req, res, next) {
       datas.noncestr=noncestr;
       datas.signature=signature;
       datas.url=url;
-      res.render('login',datas);
+      res.send(JSON.stringify(datas));
     });
   }).on('error',function(e){
     console.log('problem with request: ${e.message}');
@@ -96,36 +70,6 @@ router.get('/', function(req, res, next) {
 
 });
 
-
-
-/*
-
-router.get('/logout',function(req,res,next){
-	res.send('logout ooh! are u sure?');
-});
-
-router.get('/login',function(req,res){
-  //res.setHeader('AuthorityId', 'xxoo1100');
-  //res.setHeader('Content-Type', 'application/json');//application/x-www-form-urlencoded application/json text/xml form-data ext/html
-  //res.send('hello login');
-  console.log(req.get('content-type'));
-  console.log('req header token: '+req.get('token'));
-  //req.xhr//是否是ajax发起的请求
-  res.render('login',{title:'login'});
-  console.log('login');
-});
-router.post('/login',function(req,res){
-  res.setHeader('token', 'xxoo1100');
-  var info=req.body.username+'<br/>'+req.body.pwd;
-  res.send(info+'<br/>login success');
-  console.log(req.body);
-  //console.log(res);
-});
-router.get('/login/check',function(req,res){
-  res.send('login check');
-  console.log('/login/check');
-});
-*/
 
 //随机字符串
 function createNoncestr(){
@@ -139,6 +83,10 @@ function createNoncestr(){
 }
 
 
+
+
+
+
 /**生成指定范围的随机整数*/
 function fRandomBy(under, over){ 
   switch(arguments.length){ 
@@ -147,7 +95,6 @@ function fRandomBy(under, over){
     default: return 0; 
   } 
 }
-
 
 
 module.exports = router;

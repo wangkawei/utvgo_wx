@@ -293,7 +293,7 @@ function detailTabInitShow(){
 			menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone', 'menuItem:copyUrl', 'menuItem:openWithQQBrowser', 'menuItem:openWithSafari'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
 		});
 		//分享到朋友圈
-		wx.onMenuShareTimeline({
+		/*wx.onMenuShareTimeline({
 			title: function () {
 				return document.title + '－电视自由行'
 			}, // 分享标题
@@ -332,7 +332,7 @@ function detailTabInitShow(){
 			fail: function () {
 
 			}
-		});
+		});*/
 
 		//wx.hideOptionMenu();//隐藏右上角菜单按钮
 	});

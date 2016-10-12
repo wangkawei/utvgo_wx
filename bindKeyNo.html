@@ -93,9 +93,9 @@
 		</div>
 	</div>
 
-
-
 	<button class="login-submit">提交</button>
+
+	<div class="goRegBt-wrapper qrLoginBt-wrapper"><a class="qrLoginBt">扫码认证</a></div>
 
 <div class="loadingTip"><div class="loadingTipImg"></div></div>
 
@@ -133,6 +133,10 @@
 				return;
 			}
 			showLoading();
+			bindKeyAction(userId,addr,keyNo,username,catvId);
+		});
+		function bindKeyAction(userId,addr,keyNo,username,catvId){
+			showLoading();
 			$.ajax({
 				type: 'GET',
 				url: serverAddress+'/utvgoClient/interfaces/utvgoUser_bindKeyNoUser.action',
@@ -163,10 +167,70 @@
 					}
 				},
 				error: function(xhr, type){
-					
+					hideLoading();
 				}
 			});
+		}
+
+		$('.qrLoginBt').on('tap',function(e){
+			getSignature();
 		});
+		function qrAction(){
+			wx.scanQRCode({
+			    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+			    success: function (res) {
+				    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+				    //alert(result);//8002003224494661_GZ_3_2016-10-11_18:06:13_BF99AFD06ED2699763D5810AC20B1B9A
+				    var arr=result.split('_');
+				    if(arr.length<=0||!!!arr[1]||!!!arr[2]||!/^[0-9]+$/.test(arr[0])){
+				    	alert('非法的二维码！');
+				    	return;
+				    }else{
+				    	bindKeyAction(userId,arr[1],arr[0],'','');
+				    }
+				}
+			});
+		}
+		var isSignatureing=false;
+		var hasSignature=false;
+		function getSignature(){
+			if(!!isSignatureing) return;
+			isSignatureing=true;
+			if(hasSignature){
+				//已有签名
+				qrAction();
+				return;
+			}
+			$.ajax({
+				type: 'GET',
+				url: './getWXsignature/'+encodeURIComponent(location.href),
+				// data to be added to query string:
+				data: {
+				},
+				// type of data we are expecting in return:
+				dataType: 'json',
+				success: function(data){
+					isSignatureing=false;
+					wx.config({
+						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId: 'wx367232f3094e72b1', // 必填，公众号的唯一标识
+						timestamp: data.timestamp , // 必填，生成签名的时间戳
+						nonceStr: data.noncestr, // 必填，生成签名的随机串
+						signature: data.signature,// 必填，签名，见附录1
+						jsApiList: ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'hideOptionMenu', 'showOptionMenu', 'closeWindow', 'hideMenuItems', 'showMenuItems', 'scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+					});
+					hasSignature=true;
+					qrAction();
+				},
+				error: function(xhr, type){
+					isSignatureing=false;
+				}
+			});
+		}
+
+		/**/
+
 	</script>
 </body>
 

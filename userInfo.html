@@ -134,7 +134,7 @@
 				$('#phone').html(accountObj.phoneNumber||'');
 				$('#sex').html(accountObj.sex||'');
 				$('#borthdate').html(accountObj.birthday||'');
-				if(!!!accountObj.actvId){
+				if(!!!accountObj.actvId&&!!!accountObj.keyNO&&!!!accountObj.keyNo){
 					//还没绑定广电号
 					$('.catv-wrapper').hide();
 				}

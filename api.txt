@@ -70,11 +70,18 @@ http://app.utvgo.com:8099/utvgoClient/interfaces/getRadio_detailInfo.action?id=2
 
 
 
-登录与注册
+登录
 http://app.utvgo.com:8099/utvgoClient/interfaces/utvgoUser_login.action?catvid=13800138006&userPsw=e10adc3949ba59abbe56e057f20f883e&clientType=2&version=1.0&extra=extra&loginFlag=ED5A45612056431FA8ACEBC17B35A0A12584000006824238122B&name=%E6%AC%A7%E9%98%B3%E7%9A%84+iPhone&userType=Utvgo_User
 密码md5加密了
 
+注册
 http://app.utvgo.com:8099/utvgoClient/interfaces/utvgoUser_userRegister.action?userName=mamamia&userPsw=e10adc3949ba59abbe56e057f20f883e&email=409342535@qq.com&userType=Utvgo_User
+
+//扫码注册并登录
+http://fshk.96956.com.cn/utvgoClient/interfaces/utvgoUser_registerAndBindUser.action?userName=ivantest1&Psw=e10adc3949ba59abbe56e057f20f883e&email=ivantest@qq.com&keyNO=8002003224494661&branchNO=GZ
+
+localStorage.setItem('qrKeyNo','8002003224494661');
+localStorage.setItem('qrBranchNo','GZ');
 
 
 apiBasePath+'interfaces/smartGateway_wxBindingCheck.action'//	微信号绑定验证;參數?openid
@@ -122,12 +129,20 @@ userId=%@&email=%@&openId=%@&sex=%@&birthday=%@&phoneNumber=%@&userName=%@
 
 <!--绑定智能卡号 addBy zhangbin 20159030-->
 <bindKeyNoUser>/interfaces/utvgoUser_bindKeyNoUser.action</bindKeyNoUser>
+绑定 catvid=&userName=&keyNO=%@&branchNO=%@&userId=%@
+
+http://fshk.96956.com.cn/utvgoClient/interfaces/utvgoUser_bindKeyNoUser.action?catvid=&userName=&keyNO=8002003224494661&branchNO=GZ&userId=112231537
+
 <!--解绑智能卡号  addBy zhangbin 20159030-->
 <unBindKeyNOUser>/interfaces/utvgoUser_unBindKeyNOUser.action</unBindKeyNOUser>
-解绑的userId=%@  绑定 catvid=&userName=&keyNO=%@&branchNO=%@&userId=%@
+解绑的userId=%@  
 
 绑定返回结果
 {"errors":[],"extra":{},"result":{"memberType":"1"},"status":0}
+
+
+//异步拿到微信签名
+http://localhost:8888/utvgo_wx/dest/getWXsignature/http%3A%2F%2Ffuck.com%2F
 
 
 
@@ -230,3 +245,5 @@ http://fshk.96956.com.cn/utvgo_wx/dest/index.html
 http://192.168.1.52:8082/index
 
 
+扫码认证内容字符串：
+8002003224494661_GZ_3_2016-10-11_18:06:13_BF99AFD06ED2699763D5810AC20B1B9A

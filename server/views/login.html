@@ -135,7 +135,16 @@
 			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
 			    success: function (res) {
 				    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-				    alert(result);
+				    //alert(result);//8002003224494661_GZ_3_2016-10-11_18:06:13_BF99AFD06ED2699763D5810AC20B1B9A
+				    var arr=result.split('_');
+				    if(arr.length<=0||!!!arr[1]||!!!arr[2]||!/^[0-9]+$/.test(arr[0])){
+				    	alert('非法的二维码！');
+				    	return;
+				    }else{
+				    	localStorage.setItem('qrKeyNo',arr[0]);
+				    	localStorage.setItem('qrBranchNo',arr[1]);
+				    	location.replace('./qrLogin.html');
+				    }
 				}
 			});
 		});

@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');*/
 
 var routes = require('./routes/index');
 var login = require('./routes/login');
+var getWXsignature = require('./routes/ajaxGetSignature');
 /*var users = require('./routes/users');*/
 
 var app = express();
@@ -66,8 +67,9 @@ app.use(session({
   next();
 });*/
 
-app.use('/index', routes);
+app.use('/utvgo_wx/dest/index.html', routes);
 app.use('/utvgo_wx/dest/login.html',login);
+app.use('/utvgo_wx/dest/getWXsignature',getWXsignature);
 /*app.use('/users', users);*/
 
 
