@@ -62,6 +62,11 @@ router.get('/:url',function(req,res,next){
       datas.noncestr=noncestr;
       datas.signature=signature;
       datas.url=url;
+      if(datas.errcode==0){
+        datas.status=0;
+      }else{
+        datas.status=1;
+      }
       res.send(JSON.stringify(datas));
     });
   }).on('error',function(e){

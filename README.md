@@ -16,12 +16,23 @@
 
 
 ### 安装
-首先要装好nodejs，npm，gulp
+首先要装好nodejs，npm，gulp,supervisor,pm2
 安装supervisor
 
 ```
 npm install supervisor -g
 ```
+
+开发可用supervisor,上线用pm2
+```
+supervisor server/bin/www
+
+//pm2资料：https://blog.linuxeye.com/435.html
+pm2 start server/bin/www --watch
+
+
+```
+
 
 在项目根目录打开终端，依次输入如下命令
 
@@ -73,6 +84,11 @@ supervisor server/bin/www
 
 ### 配置nginx 样例
 ```
+
+upstream utvgo_wx_nodejs {
+    server localhost:8082 max_fails=2 fail_timeout=20s;
+}
+
 server {
     listen       8888;
     server_name  localhost;
@@ -83,23 +99,48 @@ server {
 	root   D:/utvgo_wx/;
     
 
-    location /dest/index.html {
+
+    location /utvgo_wx/dest/index.html {
         #alias   D:/utvgo_wx/dest/;
-		
+        
         #index   index.html;
-		#rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
-		proxy_pass http://localhost:8082/index;
-    }
-	
-    location /dest/login.html {
-        #alias   D:/utvgo_wx/dest/;
-		
-        #index   index.html;
-		#rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
-		proxy_pass http://localhost:8082/dest/login.html;
-		proxy_set_header Host $http_host;
+        #rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
+        proxy_pass http://localhost:8082/utvgo_wx/dest/index.html;
+        proxy_set_header Host $http_host;
         proxy_set_header  X-Real-IP  $remote_addr;
         proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    
+    location /utvgo_wx/dest/login.html {
+        #alias   D:/utvgo_wx/dest/;
+        
+        #index   index.html;
+        #rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
+        proxy_pass http://localhost:8082/utvgo_wx/dest/login.html;
+        proxy_set_header Host $http_host;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    #这中配置会自动把匹配的地址后面的路径也一起转发过去
+    location /utvgo_wx/dest/getWXsignature/ {
+        #alias   D:/utvgo_wx/;
+        
+        #index   index.html;
+        #rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
+        proxy_pass http://utvgo_wx_nodejs;
+        proxy_redirect off;
+        proxy_next_upstream error timeout;
+        proxy_set_header Host $http_host;
+        proxy_set_header  X-Real-IP  $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    
+    location /utvgo_wx/ {
+        alias   D:/utvgo_wx/;
+        
+        #index   index.html;
+        #rewrite ^/ http://10.10.16.91;    //将客户端的请求重定向
+        #proxy_pass http://localhost:8082/index;
     }
 	
 
@@ -107,4 +148,5 @@ server {
 
    
 }
+
 ```
