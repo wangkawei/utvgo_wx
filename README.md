@@ -46,9 +46,29 @@ supervisor server/bin/www
 
 ```
 
+express-partials模块,该模块可以将引擎模板中的变量再次分离
 
-安装package.json里的依赖包
+```
+npm install express-partials
 
+```
+
+### 如何调试？
+使用node-inspector
+
+```
+npm install -g node-inspector
+
+```
+
+然后在项目根目录启动：
+
+```
+node-debug server/bin/www
+
+```
+
+根据提示打开谷歌浏览器进入调试
 
 ### 安装后目录如下
 > --dest  //放构建后的文件，文件目录结构与项目代码原文件一样
