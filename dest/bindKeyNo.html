@@ -151,23 +151,51 @@
 				// type of data we are expecting in return:
 				dataType: 'json',
 				success: function(data){
-					hideLoading();
+					
 					if(data.status==0){
 						//成功
-						accountObj.keyUserName=username;
-						accountObj.actvId=catvId;
-						accountObj.branchNo=addr;
-						accountObj.keyNO=keyNo;
-						localStorage.setItem('account',JSON.stringify(accountObj));
-						alert('绑定成功');
-						history.back();
-
+						loginAction(accountObj.userName,accountObj.passwd);
 					}else{
 						alert(data.result.msg);
 					}
 				},
 				error: function(xhr, type){
 					hideLoading();
+				}
+			});
+		}
+
+		function loginAction(username,password){
+			$.ajax({
+				type: 'GET',
+				url: serverAddress+'/utvgoClient/interfaces/utvgoUser_login.action',
+				// data to be added to query string:
+				data: {
+					catvid:username,
+					userPsw:password,
+					clientType:2,
+					version:'1.0',
+					extra:'extra',
+					loginFlag:'wx',
+					name:'wx',
+					userType:'Utvgo_User'
+				},
+				// type of data we are expecting in return:
+				dataType: 'json',
+				success: function(data){
+					hideLoading();
+					if(data.status==0){
+						//成功
+						userId=data.result.userId;
+						localStorage.setItem('account',JSON.stringify(data.result));
+						alert('绑定成功');
+						history.back();
+					}else{
+						alert(data.result.msg);
+					}
+				},
+				error: function(xhr, type){
+					alert('登录失败');
 				}
 			});
 		}
