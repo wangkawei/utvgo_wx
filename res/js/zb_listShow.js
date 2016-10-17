@@ -16,24 +16,27 @@ $(document).ready(function(){
     document.getElementById('videoView').src=playUrl+liveAuth;
 });
 var limitTimer=null
-function startLimitTime(){
+function startLimitTime(fn){
     if(limitTimer){
         return;
     }
     if(!isLogin()){
+        islive=false;
         try{
             document.getElementById('videoView').pause();
         }catch(err){}
         alert('请先登录享受无限时观看！');
         //history.back();
-        location.replace('login.html');
+        window.location.replace('login.html');
         /*limitTimer=setTimeout(function(){
             clearTimeout(limitTimer);
             limitTimer=null;
             alert('直播体验时间到，请先登录享受无限时观看！');
             history.back();
         },1000*60*10);*/
+        return false;
     }
+    !!fn&&fn();
 }
 function getTvShowList(){
     $.ajax({
@@ -191,8 +194,10 @@ $(document).on("tap",".detailTabItem ",function(){
         document.getElementById('videoView').src=playUrl+liveAuth;
         $('.video-play-play-icon').hide();
         $('.video-play-img').hide();
-        document.getElementById('videoView').play();
-        startLimitTime();
+        startLimitTime(function(){
+            document.getElementById('videoView').play();
+        });
+        //
         islive=true;
     })
     .on("tap","#detailTabContentBox_1 .listItem",function(){
@@ -207,16 +212,20 @@ $(document).on("tap",".detailTabItem ",function(){
         _this.find(".playTipsText").html("正在<br>播放");
         $('.video-play-play-icon').hide();
         $('.video-play-img').hide();
-        document.getElementById('videoView').play();
-        startLimitTime();
+        startLimitTime(function(){
+            document.getElementById('videoView').play();
+        });
+        //document.getElementById('videoView').play();
         islive=false;
     });
 
 $('.video-play-wrapper').one('tap',function(e){
     $('.video-play-play-icon').hide();
     $('.video-play-img').hide();
-    document.getElementById('videoView').play();
-    startLimitTime();
+    startLimitTime(function(){
+        document.getElementById('videoView').play();
+    });
+    //document.getElementById('videoView').play();
     islive=true;
 });
 

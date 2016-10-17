@@ -450,6 +450,7 @@
 	        alert('请先登录享受无限时观看！');
 	        //history.back();
 	        location.replace('login.html');
+	        return false;
     	}
 		//先判断是否到了体验人数
 		getLimitInfo(function(){
