@@ -443,6 +443,14 @@
 	}
 
 	function init(){
+		if(!isLogin()){
+	        try{
+	            document.getElementById('videoView').pause();
+	        }catch(err){}
+	        alert('请先登录享受无限时观看！');
+	        //history.back();
+	        location.replace('login.html');
+    	}
 		//先判断是否到了体验人数
 		getLimitInfo(function(){
 			setVideoTitle(playName);

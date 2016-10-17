@@ -21,8 +21,12 @@ function startLimitTime(){
         return;
     }
     if(!isLogin()){
-        alert('直播体验时间到，请先登录享受无限时观看！');
-        history.back();
+        try{
+            document.getElementById('videoView').pause();
+        }catch(err){}
+        alert('请先登录享受无限时观看！');
+        //history.back();
+        location.replace('login.html');
         /*limitTimer=setTimeout(function(){
             clearTimeout(limitTimer);
             limitTimer=null;
