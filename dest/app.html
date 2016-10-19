@@ -31,28 +31,63 @@
     <link rel="stylesheet" href="./res/css/base.css?v=f64bdde28d" />
     <style type="text/css">
 		html,body{
-			font-size: 20px;
+			font-size: 1.538462rem;
+			background-color: #9be0e7;
+			height: 100%;
+		}
+		.btn-box{
+			width: 60%;
+			padding-top: 20px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		.androidBt,.iosBt{
+
+			margin-bottom: 20px;
+		}
+		#downloadTips{
+			background: rgba(0,0,0,0.6) url(./res/images/download-tips.png?v=2f54873ca3) no-repeat right top;
+			background-size: contain;
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			left: 0px;
+			top: 0px;
+			z-index: 9999;
+			display: none;
 		}
     </style>
     <script type="text/javascript">
     
     </script>
 </head>
-<body style="" class="">
-	<h1>佛山U生活</h1>
-	<a href="./fsush.apk">安卓版</a>
-	<br/><br/>
-	<a onclick="iosClick();">iPhone版</a>
+<body style="" class="overflow-scroll-y">
+	<img src="./res/images/download-img.png?v=9fddf05398" />
+
+	<div class="btn-box">
+		<img class="iosBt" src="./res/images/apple_download_btn.png?v=24c24819e7" onclick="iosClick();" />
+		<img class="androidBt" src="./res/images/android_download_btn.png?v=cc6affb584" onclick="androidClick();" />
+	</div>
+	<div id="downloadTips"></div>
 	
+	<script type="text/javascript" src="./res/js/lib/zepto-1.1.6.js?v=8155cb4235"></script>
 	<script>
 		function showTips(){
-			
+			$('#downloadTips').show();
+		}
+		$('#downloadTips').on('click',function(e){
+			$(this).hide();
+		});
+
+		function androidClick(){
+			window.location.href='./fsush.apk';
 		}
 		function iosClick(){
 			if(isWeiXin()){
 				showTips();
 			}else{
 				window.location.href='https://itunes.apple.com/cn/app/fu-shanu-sheng-huo/id1142129272?mt=8';
+
 			}
 		}
 		function isWeiXin(){ 
