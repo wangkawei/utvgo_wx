@@ -27,60 +27,79 @@
 	<meta name="apple-touch-fullscreen" content="yes"/>
 	<meta name="touch-fullscreen" content="yes"/>
 	
-    <title>收藏</title>
+    <title>佛山U生活-下载</title>
     <link rel="stylesheet" href="./res/css/base.css?v=f64bdde28d" />
-    <link rel="stylesheet" href="./res/css/idangerous.swiper.css?v=a769a5281c" />
-    <link rel="stylesheet" href="./res/css/main.css?v=2175a23fe1" />
     <style type="text/css">
+		html,body{
+			font-size: 1.538462rem;
+			background-color: #9be0e7;
+			height: 100%;
+		}
+		.btn-box{
+			width: 60%;
+			padding-top: 20px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		.androidBt,.iosBt{
 
+			margin-bottom: 20px;
+		}
+		#downloadTips{
+			background: rgba(0,0,0,0.6) url(./res/images/download-tips.png?v=2f54873ca3) no-repeat right top;
+			background-size: contain;
+			position: fixed;
+			height: 100%;
+			width: 100%;
+			left: 0px;
+			top: 0px;
+			z-index: 9999;
+			display: none;
+		}
     </style>
     <script type="text/javascript">
-
     
     </script>
 </head>
 <body style="" class="overflow-scroll-y">
-	<div id="main" class="overflowHidden">
-		
+	<img src="./res/images/download-img.png?v=9fddf05398" />
 
-		<div class="main-scroll list-page-main collectList-page overflow-scroll-y" style="height:100%;">
-			
-			<div id="listContent">
-				<div id="listContentBox" class="clearfix indexContentBox">
-					<!-- <div class="commonList-item">
-						<a href="#" class="commonList-item-link clearfix">
-							<div class="commonList-item-img">
-								<img src="./res/images/3.jpg?v=e4a168b45e" />
-							</div>
-							<div class="commonList-item-text-wrapper">
-								<p class="commonList-item-text">高考确定键三闾 高考确定键三闾 高考确定键三闾高考确定键三闾高考确定键三闾</p>
-								<span class="commonList-item-type-text">2015-03-05&nbsp;&nbsp;&nbsp;社会 国内</span>
-							</div>
-						</a>
-					</div> -->
-				</div>
-				<!--<button class="list-more-bt">更多</button>-->
-			</div>
-		</div>
-		
+	<div class="btn-box">
+		<img class="iosBt" src="./res/images/apple_download_btn.png?v=24c24819e7" onclick="iosClick();" />
+		<img class="androidBt" src="./res/images/android_download_btn.png?v=cc6affb584" onclick="androidClick();" />
 	</div>
-
-	<div class="loadingTip"><div class="loadingTipImg"></div></div>
-
-
+	<div id="downloadTips"></div>
+	
 	<script type="text/javascript" src="./res/js/lib/zepto-1.1.6.js?v=8155cb4235"></script>
-	<script type="text/javascript" src="./res/js/lib/fx.js?v=ca467e4b03"></script>
-	<script type="text/javascript" src="./res/js/lib/fx_methods.js?v=2aabbf9887"></script>
-	<script type="text/javascript" src="./res/js/lib/idangerous.swiper.js?v=e61af1cb6a"></script>
-	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+		function showTips(){
+			$('#downloadTips').show();
+		}
+		$('#downloadTips').on('click',function(e){
+			$(this).hide();
+		});
 
-	<script type="text/javascript" src="./res/js/main.js?v=59d8e3fa07"></script>
-	<script type="text/javascript" src="./res/js/collectList.js?v=d7c0850bda"></script>
-	<script type="text/javascript">
+		function androidClick(){
+			window.location.href='./fsush.apk';
+		}
+		function iosClick(){
+			if(isWeiXin()){
+				showTips();
+			}else{
+				window.location.href='https://itunes.apple.com/cn/app/fu-shanu-sheng-huo/id1142129272?mt=8';
 
-		//hideLoading();
-
-
+			}
+		}
+		function isWeiXin(){ 
+			var ua = window.navigator.userAgent.toLowerCase(); 
+			if(ua.match(/MicroMessenger/i) == 'micromessenger'){ 
+				return true; 
+			}else{ 
+				return false; 
+			} 
+		} 
+		
+		
 	</script>
 </body>
 
